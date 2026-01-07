@@ -38,22 +38,6 @@ Language and framework-specific best practices in the [skills/](skills/) directo
 - **typescript/** - TypeScript best practices
 - **workflow/** - General development workflow
 
-### Other Directories
-
-- **agents/** - Custom agent configurations
-- **backups/** - Configuration backups
-- **debug/** - Debug logs and diagnostics
-- **file-history/** - File change history
-- **ide/** - IDE-specific configurations
-- **plans/** - Development plans and specifications
-- **plugins/** - Plugin configurations
-- **projects/** - Project-specific settings
-- **session-env/** - Session environment data
-- **shell-snapshots/** - Shell state snapshots
-- **statsig/** - Statistics and analytics
-- **telemetry/** - Usage telemetry data
-- **todos/** - Task tracking
-
 ## Key Features
 
 - **Concise Communication** - Optimized for brevity, sacrificing grammar for concision
