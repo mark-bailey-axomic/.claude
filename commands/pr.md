@@ -16,7 +16,7 @@ Manage PRs following project conventions.
    git branch --show-current
    ```
 
-   - STOP if on `staging`, `main`, or `master`
+   - STOP if on `staging`, `develop`, `development`, `main`, or `master`
 
 2. **Check for existing PR**
 
@@ -28,22 +28,41 @@ Manage PRs following project conventions.
 
 ## Creating a PR
 
-1. **Determine target branch**
+1. **Push branch to remote**
 
    ```bash
-   git log --oneline --decorate | grep -oE 'origin/[^ ,)]+' | head -1 | sed 's|origin/||'
+   git push -u origin HEAD
    ```
 
-   - Fallback: `staging`
-   - NEVER target `master` or `main`
+2. **Determine target branch**
 
-2. **Handle ticket ID**
+   ```bash
+   # Check which base branch exists
+   git show-ref --verify --quiet refs/remotes/origin/staging && echo staging || \
+   git show-ref --verify --quiet refs/remotes/origin/develop && echo develop || \
+   echo main
+   ```
+
+   - Prefer: `staging` → `develop` → `main`
+   - NEVER target `master` or `main` directly (ask user to confirm if only option)
+
+3. **Analyze changes for summary**
+
+   ```bash
+   git log origin/{target-branch}..HEAD --oneline
+   git diff origin/{target-branch}..HEAD --stat
+   ```
+
+   - Use commits + diff to generate meaningful summary
+   - Don't just use generic descriptions
+
+4. **Handle ticket ID**
 
    - If user provided ticket ID → use it
    - If not provided → ask user if one is available
    - If none available → omit from title/body
 
-3. **Create PR**
+5. **Create PR**
 
    ```bash
    gh pr create --draft --assignee @me --base {target-branch} --title "{title}" --body "$(cat <<'EOF'
@@ -109,19 +128,25 @@ Examples:
 
 When updating an existing PR:
 
-1. **Edit title/body**
+1. **Convert to draft first**
+
+   ```bash
+   gh pr ready --undo
+   ```
+
+2. **Push code changes**
+
+   ```bash
+   git push
+   ```
+
+3. **Edit title/body** (if needed)
 
    ```bash
    gh pr edit --title "{new-title}" --body "$(cat <<'EOF'
    {new-body}
    EOF
    )"
-   ```
-
-2. **Convert back to draft**
-
-   ```bash
-   gh pr ready --undo
    ```
 
 ## Error Handling
@@ -134,6 +159,6 @@ When updating an existing PR:
 
 - Always draft mode on create
 - Always assign to self (`@me`)
-- Never target `master`/`main`
+- Never target `master`/`main`/`develop` without confirmation
 - Include ticket link only if ticket ID available
 - Update description + revert to draft on changes
