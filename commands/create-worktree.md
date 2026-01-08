@@ -1,7 +1,7 @@
 ---
 description: Create git worktree for an existing branch
 allowed-tools: Bash(git:*), AskUserQuestion
-argument-hint: [branch-name]
+argument-hint: "[branch-name]"
 ---
 
 # Create a Worktree

@@ -1,7 +1,7 @@
 ---
 description: Create or modify pull request following conventions
-allowed-tools: Bash(gh :*), Bash(git :*), AskUserQuestion
-argument-hint: [ticket-id]
+allowed-tools: Bash(gh:*), Bash(git:*), AskUserQuestion
+argument-hint: "[ticket-id]"
 ---
 
 # Create or Modify a Pull Request

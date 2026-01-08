@@ -1,7 +1,7 @@
 ---
 description: Review PR or current branch diff for issues
-allowed-tools: Bash(gh :*), Bash(git :*), mcp__atlassian__*, Skill, AskUserQuestion
-argument-hint: [pr-number] [owner/repo]
+allowed-tools: Bash(gh:*), Bash(git:*), mcp__atlassian__*, Skill, AskUserQuestion
+argument-hint: '[pr-number] [owner/repo]'
 ---
 
 # Code Review
