@@ -19,25 +19,49 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
    git branch --show-current
    ```
 
-   - If on protected branch → MUST create feature branch first
+   - If on protected branch → need branch creation (step 1)
    - If on feature branch → ask if correct branch
-     - Yes → skip branch/worktree creation
-     - No → ask: branch off current or staging?
+     - No → ask: branch off current or staging? → need branch creation (step 1)
+     - Yes → skip branch creation, check worktree (step 2)
 
-2. **Ask:** TDD approach? (yes/no)
+2. **Worktree check** (only if on correct branch)
+
+   ```bash
+   git rev-parse --show-toplevel | grep -q '/worktrees/'
+   ```
+
+   - In worktree → skip worktree creation
+   - Not in worktree → need worktree creation (step 2)
+
+3. **Ask:** TDD approach? (yes/no)
 
 ## Steps (TDD)
 
-1. Create branch/worktree (skip if on correct branch)
+1. Create branch (skip if on correct branch)
 
-   - Run `/create-branch` with ticket ID and description
-   - Run `/create-worktree` for the new branch
+   ```bash
+   ~/.claude/scripts/create-branch.sh [ticket-id] [description] [type]
+   ```
 
-2. Write tests first
+2. Create worktree (skip if already in worktree)
 
-3. Implement to pass tests
+   ```bash
+   ~/.claude/scripts/create-worktree.sh [branch-name]
+   ```
 
-4. Run tests — fix all failures before proceeding
+3. **Red-Green-Refactor cycle** (repeat until feature complete):
+
+   a. **Red:** Write test(s) for next piece of functionality
+
+   b. **Red:** Run tests — verify new test(s) FAIL
+
+   c. **Green:** Implement minimal code to pass
+
+   d. **Green:** Run tests — verify all PASS
+
+   e. **Refactor:** Clean up code if needed — tests must still pass
+
+4. Final test run — all tests must pass
 
 5. Pre-PR checks — fix all failures:
 
@@ -53,25 +77,32 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
 
 ## Steps (non-TDD)
 
-1. Create branch/worktree (skip if on correct branch)
+1. Create branch (skip if on correct branch)
 
-   - Run `/create-branch` with ticket ID and description
-   - Run `/create-worktree` for the new branch
+   ```bash
+   ~/.claude/scripts/create-branch.sh [ticket-id] [description] [type]
+   ```
 
-2. Implement
+2. Create worktree (skip if already in worktree)
 
-3. Run tests — fix all failures before proceeding
+   ```bash
+   ~/.claude/scripts/create-worktree.sh [branch-name]
+   ```
 
-4. Pre-PR checks — fix all failures:
+3. Implement
+
+4. Run tests — fix all failures before proceeding
+
+5. Pre-PR checks — fix all failures:
 
    - Lint
    - Prettier
    - TypeCheck
    - CLAUDE.md compliance
 
-5. Create PR via `/pr`
+6. Create PR via `/pr`
 
-6. Update Jira status via MCP (if ticket exists)
+7. Update Jira status via MCP (if ticket exists)
    - Use `mcp__atlassian__*` tools to set status to "In Review"
 
 ## Rules

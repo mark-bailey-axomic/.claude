@@ -10,7 +10,7 @@ VALID_TYPES="feature bug defect chore hotfix spike debt"
 BASE_BRANCHES="staging develop"
 
 # Get employee code
-emp_code=$("$SCRIPT_DIR/employee-code")
+emp_code=$("$SCRIPT_DIR/employee-code.sh")
 
 # Parse args
 ticket=""
