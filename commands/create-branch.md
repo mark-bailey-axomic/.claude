@@ -1,7 +1,7 @@
 ---
 description: Create git branch following naming conventions
-allowed-tools: Bash(git:*), Bash(gh:*), SlashCommand, AskUserQuestion
-argument-hint: [ticket-id] [description] [type]
+allowed-tools: Bash(git:*), Bash(gh:*), Skill, AskUserQuestion
+argument-hint: '[ticket-id] [description] [type]'
 ---
 
 # Create a New Branch
