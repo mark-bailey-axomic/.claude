@@ -20,13 +20,18 @@ This repository contains customized instructions, commands, and skills for enhan
 Pre-configured workflows in the [commands/](commands/) directory:
 
 - **[code-review.md](commands/code-review.md)** - Review PRs or branch diffs for issues and improvements
-- **[create-branch.md](commands/create-branch.md)** - Create new Git branches following conventions
 - **[create-shred-feedback-tickets.md](commands/create-shred-feedback-tickets.md)** - Create SHRED Jira tickets from Confluence feedback page
-- **[create-worktree.md](commands/create-worktree.md)** - Manage Git worktrees
-- **[employee-code.md](commands/employee-code.md)** - Employee code handling workflows
 - **[fix-merge-conflicts.md](commands/fix-merge-conflicts.md)** - Resolve merge conflicts
 - **[jira-ticket.md](commands/jira-ticket.md)** - JIRA ticket management
 - **[pr.md](commands/pr.md)** - Pull request creation and management
+
+### Scripts
+
+Shell scripts in the [scripts/](scripts/) directory:
+
+- **create-branch.sh** - Create Git branches following naming conventions
+- **create-worktree.sh** - Create and switch to Git worktrees
+- **employee-code.sh** - Retrieve employee code for branch naming
 
 ### Skills
 
