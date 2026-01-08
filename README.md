@@ -21,6 +21,7 @@ Pre-configured workflows in the [commands/](commands/) directory:
 
 - **[code-review.md](commands/code-review.md)** - Review PRs or branch diffs for issues and improvements
 - **[create-branch.md](commands/create-branch.md)** - Create new Git branches following conventions
+- **[create-shred-feedback-tickets.md](commands/create-shred-feedback-tickets.md)** - Create SHRED Jira tickets from Confluence feedback page
 - **[create-worktree.md](commands/create-worktree.md)** - Manage Git worktrees
 - **[employee-code.md](commands/employee-code.md)** - Employee code handling workflows
 - **[fix-merge-conflicts.md](commands/fix-merge-conflicts.md)** - Resolve merge conflicts
