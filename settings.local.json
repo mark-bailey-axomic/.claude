@@ -48,7 +48,8 @@
       "Bash(find:*)",
       "Bash(defaults read:*)",
       "Bash(say -v:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []
