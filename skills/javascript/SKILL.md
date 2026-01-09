@@ -33,7 +33,7 @@ Read and follow: <https://github.com/airbnb/javascript>
 
 ## Values
 
-- No `undefined` as explicit value (ternaries, assignments, JSX props). If absolutely necessary, use `void 0`
+- No explicit `undefined` (ternaries, assignments, function params, object properties, array indices, JSX props). Implicit undefined from missing values/optional chaining is fine. If absolutely necessary: use `void 0` for variables/function params, conditional assignment for objects/arrays
 - No conditional function assignments
 - No nested ternaries
 - No nested if statements (use early returns, guard clauses, or extract functions)
