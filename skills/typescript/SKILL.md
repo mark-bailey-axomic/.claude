@@ -1,6 +1,7 @@
 ---
 name: typescript
 description: TypeScript coding guidelines and best practices. Use when writing or reviewing TypeScript code.
+dependencies: [javascript]
 ---
 
 # Typescript Guidelines
