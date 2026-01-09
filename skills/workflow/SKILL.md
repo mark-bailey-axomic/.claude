@@ -21,32 +21,41 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
 
    - If on protected branch → need branch creation (step 1)
    - If on feature branch → ask if correct branch
-     - No → ask: branch off current or staging? → need branch creation (step 1)
-     - Yes → skip branch creation, check worktree (step 2)
+     - No → need branch creation (use `-b current` to branch off current)
+     - Yes → skip branch creation, proceed to step 2
 
-2. **Worktree check** (only if on correct branch)
+2. **Ask:** Use worktree or checkout-only?
+   - Worktree → proceed to worktree check (step 3)
+   - Checkout-only → use `-c` flag, skip worktree check and step 2
+
+3. **Worktree check** (only if using worktree flow AND on correct branch)
 
    ```bash
-   git rev-parse --show-toplevel | grep -q '/worktrees/'
+   [ -f "$(git rev-parse --git-dir)" ]
    ```
 
-   - In worktree → skip worktree creation
-   - Not in worktree → need worktree creation (step 2)
+   - Returns true (in linked worktree) → skip worktree creation
+   - Returns false (main repo) → need worktree creation (step 2)
 
-3. **Ask:** TDD approach? (yes/no)
+4. **Ask:** TDD approach? (yes/no)
 
 ## Steps (TDD)
 
 1. Create branch (skip if on correct branch)
 
    ```bash
-   ~/.claude/scripts/create-branch.sh [ticket-id] [description] [type]
+   ~/.claude/scripts/create-branch.sh [description] [type] [-c] [-b <base>]
    ```
 
-2. Create worktree (skip if already in worktree)
+   - Include ticket ID in description if needed (e.g., `SHRED-123-my-feature`)
+   - `-b current` to branch off current branch, `-b <name>` for other base (default: staging)
+   - `-c` to checkout (use for checkout-only flow, skip if using worktree)
+   - Script outputs the created branch name for use in step 2
+
+2. Create worktree (skip if checkout-only or already in worktree)
 
    ```bash
-   ~/.claude/scripts/create-worktree.sh [branch-name]
+   ~/.claude/scripts/create-worktree.sh [branch-name-from-step-1]
    ```
 
 3. **Red-Green-Refactor cycle** (repeat until feature complete):
@@ -80,13 +89,18 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
 1. Create branch (skip if on correct branch)
 
    ```bash
-   ~/.claude/scripts/create-branch.sh [ticket-id] [description] [type]
+   ~/.claude/scripts/create-branch.sh [description] [type] [-c] [-b <base>]
    ```
 
-2. Create worktree (skip if already in worktree)
+   - Include ticket ID in description if needed (e.g., `SHRED-123-my-feature`)
+   - `-b current` to branch off current branch, `-b <name>` for other base (default: staging)
+   - `-c` to checkout (use for checkout-only flow, skip if using worktree)
+   - Script outputs the created branch name for use in step 2
+
+2. Create worktree (skip if checkout-only or already in worktree)
 
    ```bash
-   ~/.claude/scripts/create-worktree.sh [branch-name]
+   ~/.claude/scripts/create-worktree.sh [branch-name-from-step-1]
    ```
 
 3. Implement
