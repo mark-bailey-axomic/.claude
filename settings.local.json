@@ -50,7 +50,8 @@
       "Bash(say -v:*)",
       "Bash(cat:*)",
       "Bash(grep:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(alias create-branch)"
     ],
     "deny": [],
     "ask": []
