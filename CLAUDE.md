@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-- In all interactions and commit messages, be etremely concise and sacrifice grammar for the sake of concision.
+- In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
 
 ## Plans
 
@@ -19,13 +19,7 @@
 ## Development
 
 - When beginning implementation work, follow workflow skill
-- When writing tests, follow testing skill
-- When writing TypeScript, follow typescript skill
-- When writing React code, follow react skill
+- When writing tests, follow testing skill + language skills based on file type
+- When writing TypeScript, follow typescript + javascript skills
+- When writing React code, follow react + typescript + javascript skills
 - When writing CSS or Sass, follow css-or-sass skill
-
-## Skill Dependencies
-
-- react skill → also invoke typescript, javascript skills
-- typescript skill → also invoke javascript skill
-- testing skill → invoke language skills based on file type

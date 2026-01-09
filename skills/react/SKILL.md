@@ -1,6 +1,7 @@
 ---
 name: react
 description: React component and hooks guidelines. Use when writing or reviewing React components, hooks, or JSX.
+dependencies: [typescript, javascript]
 ---
 
 # React Guidelines
