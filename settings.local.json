@@ -51,7 +51,8 @@
       "Bash(cat:*)",
       "Bash(grep:*)",
       "Bash(test:*)",
-      "Bash(alias create-branch)"
+      "Bash(alias create-branch)",
+      "Bash(wc:*)"
     ],
     "deny": [],
     "ask": []

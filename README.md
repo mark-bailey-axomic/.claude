@@ -24,6 +24,7 @@ Pre-configured workflows in the [commands/](commands/) directory:
 - **[fix-merge-conflicts.md](commands/fix-merge-conflicts.md)** - Resolve merge conflicts
 - **[jira-ticket.md](commands/jira-ticket.md)** - JIRA ticket management
 - **[pr.md](commands/pr.md)** - Pull request creation and management
+- **[refine-backlog.md](commands/refine-backlog.md)** - Estimate unestimated Jira backlog tickets using AI analysis with optional codebase inspection
 
 ### Scripts
 
