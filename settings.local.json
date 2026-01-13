@@ -52,7 +52,12 @@
       "Bash(grep:*)",
       "Bash(test:*)",
       "Bash(alias create-branch)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(xargs:*)",
+      "Bash(~/.claude/scripts/clean-worktrees.sh)",
+      "Bash(git worktree:*)",
+      "Bash(git -C worktrees/mba_shred-2087-fix-reorder-animation-closed-section_bug branch:*)",
+      "Bash(~/.claude/scripts/clean-worktrees.sh:*)"
     ],
     "deny": [],
     "ask": []
