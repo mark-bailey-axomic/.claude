@@ -86,6 +86,7 @@ Skill: typescript   # for .ts/.tsx files (also covers javascript)
 Skill: react        # for .tsx/.jsx components (also covers typescript, javascript)
 Skill: javascript   # for .js/.jsx files
 Skill: css-or-sass  # for .css/.scss/.sass/.module.css/.module.scss
+Skill: testing      # for .test.ts/.spec.ts/.test.tsx/.spec.tsx files
 ```
 
 ## Review Scope
