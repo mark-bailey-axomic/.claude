@@ -25,6 +25,7 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
      - Yes → skip branch creation, proceed to step 2
 
 2. **Ask:** Use worktree or checkout-only?
+
    - Worktree → proceed to worktree check (step 3)
    - Checkout-only → use `-c` flag, skip worktree check and step 2
 
@@ -72,12 +73,24 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
 
 4. Final test run — all tests must pass
 
-5. Pre-PR checks — fix all failures:
+5. Self-review loop (max 3 iterations):
 
-   - Lint
-   - Prettier
-   - TypeCheck
-   - CLAUDE.md compliance
+   a. Spawn subagent for verification:
+
+   ```
+   Task tool with subagent_type="general-purpose":
+   "Run /verify-changes on current branch. Return the JSON report.
+   Exit immediately after reporting - do not fix anything."
+   ```
+
+   b. Parse JSON report from subagent. If issues found:
+
+   - Fix reported issues
+   - Increment iteration counter
+   - If counter < 3 → repeat step 5
+   - If counter >= 3 → warn user, proceed anyway
+
+   c. If no issues → proceed to step 6
 
 6. Create PR via `/pr`
 
@@ -105,18 +118,28 @@ Never commit directly to: `main`, `master`, `develop`, `development`, `staging`
 
 3. Implement
 
-4. Run tests — fix all failures before proceeding
+4. Self-review loop (max 3 iterations):
 
-5. Pre-PR checks — fix all failures:
+   a. Spawn subagent for verification:
 
-   - Lint
-   - Prettier
-   - TypeCheck
-   - CLAUDE.md compliance
+   ```
+   Task tool with subagent_type="general-purpose":
+   "Run /verify-changes on current branch. Return the JSON report.
+   Exit immediately after reporting - do not fix anything."
+   ```
 
-6. Create PR via `/pr`
+   b. Parse JSON report from subagent. If issues found:
 
-7. Update Jira status via MCP (if ticket exists)
+   - Fix reported issues
+   - Increment iteration counter
+   - If counter < 3 → repeat step 4
+   - If counter >= 3 → warn user, proceed anyway
+
+   c. If no issues → proceed to step 5
+
+5. Create PR via `/pr`
+
+6. Update Jira status via MCP (if ticket exists)
    - Use `mcp__atlassian__*` tools to set status to "In Review"
 
 ## Rules

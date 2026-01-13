@@ -30,3 +30,9 @@ worktree_path="$repo_root/worktrees/$branch"
 
 git worktree add "$worktree_path" "$branch"
 echo "Created worktree at: $worktree_path"
+
+# Copy .env if exists
+if [[ -f "$repo_root/.env" ]]; then
+  cp "$repo_root/.env" "$worktree_path/.env"
+  echo "Copied .env to worktree"
+fi
