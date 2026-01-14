@@ -50,16 +50,16 @@ npm test 2>&1 || yarn test 2>&1 || pnpm test 2>&1 || bun test 2>&1
 
 ### 2e. CLAUDE.md Compliance
 
-Check if changes comply with project CLAUDE.md:
+Check if changes comply with CLAUDE.md:
 
-- Read project CLAUDE.md if exists
+- Read CLAUDE.md if exists
 - Verify changes follow stated conventions
 
 ## Step 3: Code Review
 
 Invoke `/code-review` command on current branch via subagent:
 
-```
+```text
 Task tool with subagent_type="general-purpose":
 "Use Skill tool to invoke 'code-review' (no arguments).
 After code-review completes its analysis, extract and return ONLY the issues list.
@@ -93,7 +93,7 @@ After code review, verify all new/changed functionality has tests:
 
 After review completes, print summary:
 
-```
+```text
 ═══════════════════════════════════════════════════════════
                     VERIFICATION REPORT
 ═══════════════════════════════════════════════════════════
