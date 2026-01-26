@@ -2,8 +2,10 @@
 .credentials.json
 history.jsonl
 stats-cache.json
+.env
 
 backups/
+__backups__/
 plans/
 logs/
 session-env/
