@@ -2,7 +2,9 @@
 .credentials.json
 history.jsonl
 stats-cache.json
+.env
 
+__backups__/
 backups/
 plans/
 logs/
