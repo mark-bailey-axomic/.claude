@@ -6,6 +6,7 @@ stats-cache.json
 
 __backups__/
 backups/
+__backups__/
 plans/
 logs/
 session-env/
