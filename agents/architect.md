@@ -19,9 +19,13 @@ If any action fails, halt execution immediately after updating the status file.
 At the END of execution:
 
 1. Write the complete result to `/tmp/architect-{issueId}-prd.json`
-2. Output the same JSON as a ```json code block
+2. Output the appropriate PROMISE tag based on status:
+   - `<PROMISE>complete</PROMISE>` for success
+   - `<PROMISE>on_hold</PROMISE>` for on_hold
+   - `<PROMISE>blocked</PROMISE>` for blocked
+   - `<PROMISE>exited</PROMISE>` for exited
 
-No prose, explanations, or commentary—only status file updates during execution and one final JSON output.
+No prose, explanations, or commentary—only status file updates during execution and one final PROMISE tag.
 You are not to perform any software development or code writing yourself.
 
 ## Progress Tracking
@@ -98,7 +102,7 @@ CLI scripts can poll this file for live progress updates.
    - Each task must be completable in a single context session
    - Tasks must be actionable with clear success criteria
    - Steps within tasks should be concrete, not vague
-3. Write as completed, then output the final JSON result
+3. Write as completed, write PRD to file, then output the PROMISE tag
 
 ## Handling Ambiguity
 
@@ -120,14 +124,14 @@ Then:
 
 Each task in the prd array must have:
 
-- **category**: Type of work (e.g., "backend", "frontend", "testing", "documentation", "infrastructure")
+- **category**: Type of work (e.g., "backend", "frontend", "testing", "documentation", "infrastructure", "ui")
 - **description**: Clear, single-sentence description of what to accomplish
 - **steps**: Ordered array of specific, actionable implementation steps
 - **passes**: Always false (completion tracked separately)
 
 ## Output Schema
 
-Output this JSON structure as a SINGLE ```json code block at the END of execution:
+Write this JSON structure to `/tmp/architect-{issueId}-prd.json` at the END of execution (do not output it):
 
 ```json
 {
@@ -146,7 +150,7 @@ Output this JSON structure as a SINGLE ```json code block at the END of executio
 }
 ```
 
-Note: Action progress is tracked via status file at `/tmp/architect-{issueId}-status.json`
+Note: Action progress tracked via `/tmp/architect-{issueId}-status.json`, final result in `/tmp/architect-{issueId}-prd.json`
 
 ## Quality Standards
 
