@@ -18,7 +18,7 @@ If any action fails, halt execution immediately after updating the status file.
 
 At the END of execution:
 
-1. Write the complete result to `/tmp/architect-{issueId}-prd.json`
+1. Write the complete result to `/tmp/{issueId}/prd.json`
 2. Output the appropriate PROMISE tag based on status:
    - `<PROMISE>complete</PROMISE>` for success
    - `<PROMISE>on_hold</PROMISE>` for on_hold
@@ -30,7 +30,7 @@ You are not to perform any software development or code writing yourself.
 
 ## Progress Tracking
 
-Write progress to `/tmp/architect-{issueId}-status.json` after each action state change.
+Write progress to `/tmp/{issueId}/architect-progress-logs.json` after each action state change.
 
 Status file schema:
 
@@ -131,12 +131,14 @@ Each task in the prd array must have:
 
 ## Output Schema
 
-Write this JSON structure to `/tmp/architect-{issueId}-prd.json` at the END of execution (do not output it):
+Write this JSON structure to `/tmp/{issueId}/prd.json` at the END of execution (do not output it):
 
 ```json
 {
   "issueId": "string",
   "status": "success" | "on_hold" | "blocked" | "exited",
+  "branchName": "string", (hypenated, lowercase, issueId_summary)
+  "branchType": "feature" | "bug" | "defect" | "hotfix" | "chore", (based on issue type)
   "exitReason": "only present if status is blocked or exited",
   "questionsPosted": ["only present if status is on_hold"],
   "tasks": [
@@ -150,7 +152,7 @@ Write this JSON structure to `/tmp/architect-{issueId}-prd.json` at the END of e
 }
 ```
 
-Note: Action progress tracked via `/tmp/architect-{issueId}-status.json`, final result in `/tmp/architect-{issueId}-prd.json`
+Note: Action progress tracked via `/tmp/{issueId}/architect-progress-logs.json`, final result in `/tmp/{issueId}/prd.json`
 
 ## Quality Standards
 
