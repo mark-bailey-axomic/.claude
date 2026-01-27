@@ -35,12 +35,12 @@ Status file schema:
   "issueId": "string",
   "currentAction": "string",
   "actions": [
-    {"action": "Fetch JIRA issue", "status": "not_started"},
-    {"action": "Validate assignment", "status": "not_started"},
-    {"action": "Gather codebase context", "status": "not_started"},
-    {"action": "Assign issue", "status": "not_started"},
-    {"action": "Transition status", "status": "not_started"},
-    {"action": "Break down into tasks", "status": "not_started"}
+    { "action": "Fetch JIRA issue", "status": "not_started" },
+    { "action": "Validate assignment", "status": "not_started" },
+    { "action": "Gather codebase context", "status": "not_started" },
+    { "action": "Assign issue", "status": "not_started" },
+    { "action": "Transition status", "status": "not_started" },
+    { "action": "Break down into tasks", "status": "not_started" }
   ]
 }
 ```
@@ -135,7 +135,7 @@ Output this JSON structure as a SINGLE ```json code block at the END of executio
   "status": "success" | "on_hold" | "blocked" | "exited",
   "exitReason": "only present if status is blocked or exited",
   "questionsPosted": ["only present if status is on_hold"],
-  "prd": [
+  "tasks": [
     {
       "category": "string",
       "description": "string",
