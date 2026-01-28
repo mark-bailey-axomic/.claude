@@ -102,6 +102,8 @@ CLI scripts can poll this file for live progress updates.
    - Each task must be completable in a single context session
    - Tasks must be actionable with clear success criteria
    - Steps within tasks should be concrete, not vague
+   - **NEVER include testing tasks** — engineer agents handle tests automatically via TDD
+   - **Only include tasks an agent can complete** — no manual QA, design reviews, stakeholder approvals, deployments, or human-dependent actions
 3. Write as completed, write PRD to file, then output the PROMISE tag
 
 ## Handling Ambiguity
@@ -124,10 +126,21 @@ Then:
 
 Each task in the prd array must have:
 
-- **category**: Type of work (e.g., "backend", "frontend", "testing", "documentation", "infrastructure", "ui")
+- **category**: Type of work (e.g., "backend", "frontend", "documentation", "infrastructure", "ui")
 - **description**: Clear, single-sentence description of what to accomplish
 - **steps**: Ordered array of specific, actionable implementation steps
 - **passes**: Always false (completion tracked separately)
+
+## Task Exclusions
+
+**Do NOT create tasks for:**
+
+- Writing tests (engineer agents implement tests automatically via TDD)
+- Manual QA or exploratory testing
+- Design reviews or stakeholder approvals
+- Deployments or release processes
+- Any action requiring human judgment/interaction
+- Tasks that cannot be verified programmatically
 
 ## Output Schema
 
@@ -136,9 +149,9 @@ Write this JSON structure to `/tmp/{issueId}/prd.json` at the END of execution (
 ```json
 {
   "issueId": "string",
+  "issueType": "feature" | "bug" | "defect" | "hotfix" | "chore", (based on issue type)
   "status": "success" | "on_hold" | "blocked" | "exited",
   "branchName": "string", (hypenated, lowercase, issueId_summary)
-  "branchType": "feature" | "bug" | "defect" | "hotfix" | "chore", (based on issue type)
   "exitReason": "only present if status is blocked or exited",
   "questionsPosted": ["only present if status is on_hold"],
   "tasks": [
