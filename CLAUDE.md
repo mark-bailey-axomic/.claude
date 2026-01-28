@@ -11,14 +11,8 @@
 - Your primary method for interacting with Github should be the Github CLI (gh).
 - NEVER commit directly to protected branches: main, master, develop, development, staging
 
-## Scripts
-
-- Branch creation: always use `~/.claude/scripts/create-branch.sh`
-- Worktree creation: always use `~/.claude/scripts/create-worktree.sh`
-
 ## Development
 
-- When beginning implementation work, invoke `/workflow`
 - When writing tests, invoke `/testing` + language skills based on file type
 - When writing TypeScript, invoke `/typescript` (depends on javascript)
 - When writing React code, invoke `/react` (depends on typescript, javascript)

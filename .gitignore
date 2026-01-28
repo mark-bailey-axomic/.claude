@@ -4,6 +4,7 @@ history.jsonl
 stats-cache.json
 .env
 
+__backups__/
 backups/
 __backups__/
 plans/
@@ -18,3 +19,4 @@ statsig/
 todos/
 telemetry/
 plugins/
+tasks/
