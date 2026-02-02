@@ -80,6 +80,7 @@ if ! git rev-parse --git-dir &>/dev/null; then
 fi
 
 repo_root=$(git rev-parse --show-toplevel)
+repo_name=$(basename "$repo_root")
 branch="${1:-$(git branch --show-current)}"
 
 # Check branch provided
@@ -103,7 +104,7 @@ if ! git show-ref --verify --quiet "refs/heads/$branch" && \
   error_msg "Branch '$branch' does not exist. Create it first with create-branch."
 fi
 
-worktree_path="$repo_root/worktrees/$branch"
+worktree_path="$HOME/.claude/worktrees/$repo_name/$branch"
 
 if $json_output; then
   if ! git worktree add "$worktree_path" "$branch" >/dev/null 2>&1; then

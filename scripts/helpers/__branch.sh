@@ -20,7 +20,7 @@ make_branch_slug() {
   local slug=$(echo "$summary" | \
     tr '[:upper:]' '[:lower:]' | \
     tr ' ' '-' | \
-    sed 's/[^a-z0-9-_]//g' | \
+    sed 's/[^a-z0-9_-]//g' | \
     cut -c1-40)
   if [[ -n "$issue_id" ]]; then
     echo "${issue_id}_${slug}"
