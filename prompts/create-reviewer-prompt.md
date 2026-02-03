@@ -21,6 +21,25 @@ On startup, determine mode from provided parameters:
 - `autoApprove` (optional): If true, auto-approve PR when review passes
 - `autoDecline` (optional): If true, auto-request-changes when review finds issues
 
+## Allowed Tools
+
+Only use these tools during review:
+
+- **Bash**: For `git diff`, `gh pr diff`, `gh pr view`, `git merge-base`, `git branch`, `gh api`
+- **Skill**: To load coding guidelines
+- **Write**: To output review.json
+- **Read**: ONLY for reading existing review.json files, NEVER for source code files
+
+Do not use: Read (on source files), Glob, Grep, Task, WebFetch, WebSearch
+
+## How to Analyze Code
+
+1. Run `git diff` or `gh pr diff` to get the diff output
+2. Parse the diff text directly—each hunk shows changed lines with `+` (added) and `-` (removed)
+3. Review only the lines shown in the diff hunks
+4. The diff context lines (unchanged lines around changes) provide sufficient surrounding context
+5. If more context is needed, note "Insufficient context in diff for X" as a limitation
+
 ## Output Path
 
 Determine output directory based on available identifiers:
@@ -44,7 +63,7 @@ Branch name: sanitize by replacing `/` with `-` (e.g., `feature/auth` → `featu
    - `/typescript` for type safety (depends on javascript)
    - `/css-or-sass` for styling
    - `/testing` + language for test files
-6. Analyze code changes against review criteria
+6. Analyze the diff content (see "How to Analyze Code" section)
 7. If PR has existing comments, verify changes address them
 8. Take action based on flags and findings:
    - If review passes AND `autoApprove` → `gh pr review {prNumber} --approve`
@@ -66,31 +85,36 @@ Reviews changes on current branch against its base branch.
 
 ### Code Review Workflow
 
-1. Determine base branch: `git merge-base HEAD main` (or appropriate base)
-2. Get current branch name: `git branch --show-current`
-3. Determine output path (see Output Path section)
-4. Get diff: `git diff {base}...HEAD`
-5. List changed files: `git diff --name-only {base}...HEAD`
-6. Check for existing review.json at output path:
+1. Get current branch name: `git branch --show-current`
+2. Check for existing PR: `gh pr list --head {branch} --json number --jq '.[0].number'`
+3. **If PR exists** → use `gh pr diff {prNumber}` (excludes merged-in changes from other branches)
+4. **If no PR**:
+   - Get base: `git merge-base HEAD main`
+   - Get feature branch commits only (excludes merge commits): `git log --oneline --first-parent --no-merges {base}..HEAD`
+   - If branch has merge commits, diff only files changed in non-merge commits
+   - Get diff: `git diff {base}...HEAD` filtered to feature-only files
+5. Determine output path (see Output Path section)
+6. List changed files from diff output (for skill invocation only)
+7. Check for existing review.json at output path:
    - If exists → Focus review on previously requested changes
    - If not → Full comprehensive review
-7. Invoke relevant skills based on file types (use Skill tool as above)
-8. Perform thorough analysis
-9. Write findings to output path
+8. Invoke relevant skills based on file types (use Skill tool as above)
+9. Analyze the diff content (see "How to Analyze Code" section)
+10. Write findings to output path
 
 ### Incremental Review (review.json exists)
 
 When review.json exists at output path from previous review:
 
-1. Parse previous findings
-2. Check if each issue has been addressed
+1. Read previous review.json (this is the only file you may Read)
+2. Check if issues addressed by examining diff output
 3. Mark resolved items as `"status": "resolved"`
-4. Add any new issues discovered
-5. Skip files that had no previous issues and remain unchanged
+4. Add any new issues discovered in diff content
+5. Files not in diff = no review needed
 
 ## Review Criteria
 
-Analyze all changes for:
+Analyze the changed lines from the diff for:
 
 ### Code Quality
 
