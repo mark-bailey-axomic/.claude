@@ -1,12 +1,19 @@
 {
   "permissions": {
-    "allow": ["Bash(~/.claude/statusline-command.sh)"],
+    "allow": [
+      "Bash(~/.claude/statusline-command.sh)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh api:*)"
+    ],
     "deny": [],
     "ask": []
   },
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": false,
-    "excludedCommands": ["npm"]
+    "excludedCommands": [
+      "npm"
+    ]
   }
 }
