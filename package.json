@@ -1,0 +1,17 @@
+{
+  "name": "@mark-bailey-axomic/claude-setup",
+  "version": "1.0.0",
+  "description": "Personal Claude AI assistant configuration and workspace for development workflows, commands, and skills.",
+  "homepage": "https://github.com/mark-bailey-axomic/.claude#readme",
+  "bugs": {
+    "url": "https://github.com/mark-bailey-axomic/.claude/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark-bailey-axomic/.claude.git"
+  },
+  "author": "Mark Bailey",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
