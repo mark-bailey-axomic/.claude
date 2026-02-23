@@ -2,6 +2,7 @@
 .credentials.json
 history.jsonl
 stats-cache.json
+mcp-needs-auth-cache.json
 .env
 
 backups/
@@ -19,3 +20,4 @@ todos/
 telemetry/
 plugins/
 cache/
+__pycache__/
