@@ -9,7 +9,7 @@
 ## Github
 
 - Your primary method for interacting with Github should be the Github CLI (gh).
-- NEVER commit directly to protected branches: main, master, develop, development, staging
+- NEVER commit to a branch unless its name starts with `{EMPLOYEE_CODE}_` (from .env) or `claude_`. Always verify current branch before committing.
 
 ## Atlassian
 
