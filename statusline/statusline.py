@@ -1,19 +1,58 @@
 #!/usr/bin/env python3
 """Configurable statusline for Claude Code. Reads session JSON from stdin, outputs formatted status bar."""
 
-import json
-import os
-import sys
-import glob
-import time
-import hashlib
-import tempfile
-from datetime import datetime, timezone
+import os, sys, json
+from typing import Any
 
-from statusline.helpers import get_system_color_scheme
+def load_config() -> dict[str, Any]:
+    # Load user config
+    config = dict(segments=[])
 
-CACHE_PREFIX = "claude_statusline_cache_"
-CLAUDE_DIR = os.path.join(os.path.expanduser("~"), ".claude")
-CONFIG_PATH = os.path.join(CLAUDE_DIR, "statusline", "config.json")
+    try:
+      file_path = os.path.abspath(__file__)
+      file_dir = os.path.dirname(file_path)
+      CONFIG_PATH = os.path.join(file_dir, "config.json")
 
-COLOR_SCHEME = get_system_color_scheme()
+      with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        config = dict(json.loads(f.read()))
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+    
+    return config
+
+def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[str]:
+    segments: list[str] = []
+    for segment in config.get("segments", []):
+      if not segment.get("enabled", False):
+        continue
+      try:
+        # Dynamically import the segment module and get its text
+        segment_module = __import__(f"segments.{segment['type']}", fromlist=["get_segment"])
+        segment_text: str = segment_module.get_segment(segment, session)
+
+        if segment_text:
+          segments.append(segment_text)
+      except ImportError:
+        pass
+
+    return segments
+
+def main():
+  # Read session JSON from stdin (if available)
+  session: dict[str, Any] = json.load(sys.stdin) if not sys.stdin.isatty() else {}
+  
+  # Load user config
+  config = load_config()
+  # Build segments
+  segments = build_segments(config, session)
+
+  # Force UTF-8 output on Windows
+  if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+      
+  # Render final statusline``
+  sys.stdout.write("".join(segments))
+  sys.stdout.flush()
+
+if __name__ == "__main__":
+  main()

@@ -1,20 +1,19 @@
 {
-  "segments": ["git"],
-  "modules": [
-    { "id": "git_repo", "enabled": true, "icon": "🐙", "fg": "#f6f8fa", "bg": "#1f2328" },
-    { "id": "git_branch", "enabled": true, "icon": "🌿", "fg": "#0969da", "bg": "#ddf4ff" },
-    { "id": "ai_model", "enabled": true, "icon": "✨", "fg": "#7aa2f7", "bg": null },
-    { "id": "usage_reset", "enabled": false, "icon": "🔄", "fg": "#e0af68", "bg": null },
-    { "id": "usage_daily", "enabled": false, "icon": "📅", "fg": "#9ece6a", "bg": null },
-    { "id": "usage_weekly", "enabled": false, "icon": "🗓️", "fg": "#bb9af7", "bg": null },
-    { "id": "sandbox_mode", "enabled": false, "icon": "📦", "fg": "#f7768e", "bg": null }
-  ],
-  "color_scheme": "system",
-  "icons": true,
-  "cache_ttl_seconds": 10,
-  "block_hours": 5,
-  "limits": {
-    "daily_tokens": 0,
-    "weekly_tokens": 0
-  }
+  "segments": [
+    {
+      "type": "directory",
+      "enabled": true,
+      "show_icon": true
+    },
+    {
+      "type": "git_branch",
+      "enabled": true,
+      "show_icon": true
+    },
+    {
+      "type": "ai_model",
+      "enabled": true,
+      "show_icon": true
+    }
+  ]
 }
