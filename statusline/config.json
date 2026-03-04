@@ -2,18 +2,21 @@
   "segments": [
     {
       "type": "directory",
-      "enabled": true,
-      "show_icon": true
+      "style": "powerline",
+      "show_icon": true,
+      "enabled": true
     },
     {
       "type": "git_branch",
-      "enabled": true,
-      "show_icon": true
+      "style": "powerline",
+      "show_icon": true,
+      "enabled": true
     },
     {
       "type": "ai_model",
-      "enabled": true,
-      "show_icon": true
+      "style": "powerline",
+      "show_icon": true,
+      "enabled": true
     }
   ]
 }
