@@ -17,6 +17,13 @@
       "style": "powerline",
       "show_icon": true,
       "enabled": true
+    },
+    {
+      "type": "usage_context",
+      "style": "powerline",
+      "display": ["percentage", "tokens", "cost"],
+      "show_icon": true,
+      "enabled": true
     }
   ]
 }
