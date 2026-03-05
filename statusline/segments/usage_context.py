@@ -1,11 +1,5 @@
 from typing import Any, cast
 
-def usage_icon(percent: float) -> str:
-    icons = ["○", "◔", "◑", "◕", "●"]
-    i = min(int(percent / 25), 4)
-    return f"{icons[i]} "
-
-
 def get_segment(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
     show_icon = bool(config.get("show_icon", False))
     display = cast(list[str], config.get("display", []))
@@ -24,10 +18,9 @@ def get_segment(config: dict[str, str | bool], session: dict[str, Any]) -> str |
             total_output_tokens: int = context_window.get('total_output_tokens', 0)
             token_limit: int = context_window.get('context_window_size', 0)
             total_tokens = total_input_tokens + total_output_tokens
-            segment_parts.append(f"{total_tokens}/{token_limit} tokens")
+            segment_parts.append(f"{total_tokens}/{token_limit}")
         elif item == "cost":
             total_cost: float = session.get('cost', {}).get('total_cost_usd', 0)
             segment_parts.append(f"${total_cost:.2f}")
 
-    icon = usage_icon(used_percentage) if show_icon else ""
-    return f"{icon}{' '.join(segment_parts)}" if segment_parts else None
+    return f"{' '.join(segment_parts)}" if segment_parts else None
