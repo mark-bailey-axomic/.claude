@@ -22,16 +22,14 @@ def get_repo(cwd: str, show_icon: bool) -> str | None:
         url = CompletedProcess.stdout.strip()
         name = parse_git_remote(url)
         icon = "🐙 " if show_icon else ""
-        if name:
-          return f" {icon}{name} "#colorize(f"{icon}{name}", fg="#f6f8fa", bg="#1f2328")
-        return None
+        return f"{icon}{name}" if name else None
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
       return None
     
 def get_directory(cwd: str, show_icon: bool) -> str:
   dir_icon = "📁 " if show_icon else ""
   dir_name = os.path.basename(cwd)
-  return f" {dir_icon}{dir_name} "# colorize(f"{dir_icon}{dir_name}", fg="#ffffff")
+  return f"{dir_icon}{dir_name}"
 
 def get_segment(config: dict[str, str | bool], session: dict[str, object] | None = None) -> str | None:
   cwd = os.getcwd()
@@ -39,8 +37,6 @@ def get_segment(config: dict[str, str | bool], session: dict[str, object] | None
 
   try:
     repo = get_repo(cwd, show_icon)
-    if repo:
-      return f"{repo}"
-    return get_directory(cwd, show_icon)
+    return repo if repo else get_directory(cwd, show_icon)
   except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
     return get_directory(cwd, show_icon)

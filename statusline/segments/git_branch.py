@@ -10,7 +10,7 @@ def get_segment(config: dict[str, str | bool], session: dict[str, object] | None
       if CompletedProcess.returncode == 0:
         branch = CompletedProcess.stdout.strip()
         icon = "🌿 " if show_icon else ""
-        return f" {icon}{branch} "
+        return f"{icon}{branch}"
       return None
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
       return None
