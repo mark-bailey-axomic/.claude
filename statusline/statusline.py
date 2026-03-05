@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Configurable statusline for Claude Code. Reads session JSON from stdin, outputs formatted status bar."""
 
+from logging import config
 import os, sys, json
 from typing import Any
+
+from globals import DEFAULT_SEPARATOR
 
 def load_config() -> dict[str, Any]:
     # Load user config
@@ -22,16 +25,19 @@ def load_config() -> dict[str, Any]:
 
 def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[str]:
     segments: list[str] = []
-    for segment in config.get("segments", []):
-      if not segment.get("enabled", False):
-        continue
+    enabled_segments = [s for s in config.get("segments", []) if s.get("enabled", False)]
+    total_segments = len(enabled_segments)
+
+    for i, segment in enumerate(enabled_segments):
       try:
         # Dynamically import the segment module and get its text
         segment_module = __import__(f"segments.{segment['type']}", fromlist=["get_segment"])
         segment_text: str = segment_module.get_segment(segment, session)
 
         if segment_text:
-          segments.append(segment_text)
+          is_last = (i == total_segments - 1)
+          separator: str = "" if is_last else config.get("separator", DEFAULT_SEPARATOR)
+          segments.append(f"{segment_text}{separator}")
       except ImportError:
         pass
 

@@ -1,3 +1,5 @@
 
 ANSI_RESET = "\033[0m"
 ANSI_BOLD = "\033[1m"
+
+DEFAULT_SEPARATOR = " | "
