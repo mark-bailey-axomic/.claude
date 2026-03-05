@@ -1,5 +1,6 @@
 {
-  "seperator": " ",
+  "color_scheme": "auto",
+  "separator": " ",
   "segments": [
     {
       "type": "directory",
