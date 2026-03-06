@@ -1,5 +1,11 @@
 from typing import Any, cast
 
+def make_progress_bar(pct: int, width: int = 10) -> str:
+    filled = int(width * pct / 100)
+    bar = "█" * filled + "░" * (width - filled)
+    return f"[{bar} {pct}]"
+
+# Token Methods
 def format_tokens(tokens: int) -> str:
     if tokens >= 1_000_000:
         return f"{tokens / 1_000_000:.0f}M"
@@ -17,19 +23,19 @@ def get_token_usage(session: dict[str, Any]) -> str:
 
     return f"{format_tokens(total_tokens)}/{format_tokens(token_limit)}"
 
-def get_segment(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
+# Main
+def main(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
     # show_icon = bool(config.get("show_icon", False))
-    display = cast(list[str], config.get("display", []))
-
-    # Extract usage context information from the session
-    context_window = session.get('context_window', {})
+    display = cast(list[str], config.get("display", []))# Debug statement to check display config
 
     # Build the segment text based on the display settings
     segment_parts: list[str] = []
     for item in display:
         if item == "percentage":     
-            used_percentage: float = context_window.get('used_percentage', 0)  
-            segment_parts.append(f"{used_percentage:.0f}%")
+            # Extract usage context information from the session
+            context_window = session.get('context_window', {})
+            used_percentage: int = context_window.get('used_percentage', 0) or 0
+            segment_parts.append(make_progress_bar(used_percentage))
         elif item == "tokens":
             segment_parts.append(get_token_usage(session))
         elif item == "cost":

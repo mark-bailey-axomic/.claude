@@ -56,8 +56,9 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[str
         color_scheme = config.get("color_scheme", "dark")
         text = module.main({ **cfg, "color_scheme": color_scheme }, session)
         if text: segments.append(text)
-      except Exception as _:
+      except Exception as e:
         # Handle exceptions gracefully (e.g., log them, skip the segment, etc.)
+        import sys; print(f"SEGMENT ERROR: {e}", file=sys.stderr)
         pass
   return segments
 
@@ -65,10 +66,13 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[str
 def main():
   # Read session JSON from stdin (if available)
   session: dict[str, Any] = json.load(sys.stdin) if not sys.stdin.isatty() else {}
-  
+  here = os.path.dirname(os.path.abspath(__file__))
+  path = os.path.join(here, "data.json")  
+  with open(path, "w") as f:
+    json.dump(session, f, indent=2)
+
   # Load user config
   config = load_config()
-
   # Build segments
   segments: list[str] = build_segments(config, session)
 
@@ -77,7 +81,8 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
       
   # Render final statusline``
-  sys.stdout.write(" ".join(segments))
+  output = " ".join(segments)
+  sys.stdout.write(f"{output}\n")
   sys.stdout.flush()
 
 if __name__ == "__main__":

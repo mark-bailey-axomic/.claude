@@ -1,7 +1,11 @@
 from typing import Any
 
-def get_segment(_, session: dict[str, Any]) -> str | None:
+# Main
+def main(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
     model = session.get('model', {}).get('display_name', None)
+    show_label = bool(config.get("show_label", False))
+
+    label = "Model: " if show_label else ""
     if not model:
-      return f"[MODEL_NOT_FOUND]"
-    return f"{model}"
+      return "[MODEL_NOT_FOUND]"
+    return f"{label}{model}"
