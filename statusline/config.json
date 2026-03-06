@@ -5,25 +5,26 @@
     {
       "type": "directory",
       "show_icon": false,
+      "show_label": true,
       "make_hyperlink": false,
       "enabled": true
     },
     {
       "type": "git_branch",
       "show_icon": false,
-      "make_hyperlink": false,
       "enabled": true
     },
     {
       "type": "ai_model",
-      "show_icon": true,
-      "enabled": false
+      "show_icon": false,
+      "show_label": true,
+      "enabled": true
     },
     {
       "type": "usage_context",
       "display": ["percentage", "tokens", "cost"],
-      "show_icon": true,
-      "enabled": false
+      "show_icon": false,
+      "enabled": true
     }
   ]
 }
