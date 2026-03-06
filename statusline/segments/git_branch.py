@@ -12,7 +12,17 @@ def get_color(color_scheme: str, style: str) -> dict[str, str | None]:
     fg = "#4493f8" if IS_DARK else "#0969da"
     bg = None
 
-  return { "fg": fg, "bg": bg }
+  return dict(fg=fg, bg=bg)
+
+def get_branch() -> str | None:
+  try:
+    BRANCH_CMD = "git branch --show-current"
+    process = subprocess.run(BRANCH_CMD, capture_output=True, text=True, timeout=5)
+    if process.returncode == 0:
+      return process.stdout.strip()
+    return None
+  except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+    return None
 
 def get_segment(config: dict[str, str | bool], _: dict[str, object] | None = None) -> str | None:
   cwd = os.getcwd()
@@ -21,13 +31,12 @@ def get_segment(config: dict[str, str | bool], _: dict[str, object] | None = Non
   color_scheme = cast(str, config.get("color_scheme", "dark"))
   colors = get_color(color_scheme, style)
 
+  print(f"Debug: cwd={cwd}, show_icon={show_icon}, style={style}, color_scheme={color_scheme}")
+  print(f"Debug: colors={colors}")
   try:
-    BRANCH_CMD = "git branch --show-current"
-    CompletedProcess = subprocess.run(BRANCH_CMD, capture_output=True, text=True, timeout=5, cwd=cwd)
-    if CompletedProcess.returncode == 0:
-      branch = CompletedProcess.stdout.strip()
+    branch = get_branch()
+    if branch:
       icon = "🌿 " if show_icon else ""
-      print(f"Color scheme: {color_scheme}, colors: {colors}")
       return colorize(f"{icon}{branch}", **colors)
     return None
   except (subprocess.TimeoutExpired, FileNotFoundError, OSError):

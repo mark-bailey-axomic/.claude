@@ -1,32 +1,29 @@
 {
   "color_scheme": "dark",
-  "separator": "",
+  "display_as": "powerline",
   "segments": [
     {
       "type": "directory",
-      "style": "powerline",
-      "show_icon": true,
-      "make_hyperlink": true,
+      "show_icon": false,
+      "make_hyperlink": false,
       "enabled": true
     },
     {
       "type": "git_branch",
-      "style": "powerline",
-      "show_icon": true,
+      "show_icon": false,
+      "make_hyperlink": false,
       "enabled": true
     },
     {
       "type": "ai_model",
-      "style": "powerline",
       "show_icon": true,
-      "enabled": true
+      "enabled": false
     },
     {
       "type": "usage_context",
-      "style": "powerline",
       "display": ["percentage", "tokens", "cost"],
       "show_icon": true,
-      "enabled": true
+      "enabled": false
     }
   ]
 }
