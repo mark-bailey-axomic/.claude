@@ -66,10 +66,6 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[str
 def main():
   # Read session JSON from stdin (if available)
   session: dict[str, Any] = json.load(sys.stdin) if not sys.stdin.isatty() else {}
-  here = os.path.dirname(os.path.abspath(__file__))
-  path = os.path.join(here, "data.json")  
-  with open(path, "w") as f:
-    json.dump(session, f, indent=2)
 
   # Load user config
   config = load_config()
