@@ -1,11 +1,12 @@
 {
-  "color_scheme": "auto",
-  "separator": " ",
+  "color_scheme": "dark",
+  "separator": "",
   "segments": [
     {
       "type": "directory",
       "style": "powerline",
       "show_icon": true,
+      "make_hyperlink": true,
       "enabled": true
     },
     {
