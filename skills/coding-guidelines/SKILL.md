@@ -52,5 +52,6 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/javascript.md` - JS conventions & patterns (base)
 - `references/typescript.md` - TS type system & strict mode (extends javascript.md)
 - `references/react.md` - React component patterns & hooks (extends typescript.md)
+- `references/mantine.md` - Mantine component library patterns (extends react.md)
 - `references/css-or-sass.md` - Styling conventions
 - `references/test.md` - Testing strategy & patterns
