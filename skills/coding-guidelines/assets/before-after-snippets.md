@@ -38,9 +38,9 @@ class Greeting extends React.Component<{ name: string }> {
 
 **Good** — functional component:
 ```tsx
-function Greeting({ name }: { name: string }) {
+const Greeting: FC<{ name: string }> = ({ name }) => {
   return <h1>Hello, {name}</h1>;
-}
+};
 ```
 
 ## React — Missing useEffect Deps
@@ -71,7 +71,7 @@ useEffect(() => {
 <button className={styles.saveButton}>Save</button>
 ```
 ```css
-.saveButton { background-color: var(--color-primary); padding: 0.5rem 1rem; border-radius: 0.25rem; }
+.saveButton { background-color: var(--color-primary); padding: var(--spacing-2) var(--spacing-4); border-radius: var(--radius-sm); }
 ```
 
 ---
@@ -291,9 +291,9 @@ query GetDashboard {
 }
 ```
 ```tsx
-function UserCard({ user }: { user: GetDashboardQuery['user'] }) {
+const UserCard: FC<{ user: GetDashboardQuery['user'] }> = ({ user }) => {
   return <div>{user.name} — {user.email}</div>;
-}
+};
 ```
 
 **Good** — child declares its own fragment:
@@ -307,6 +307,6 @@ query GetDashboard { user { ...UserCardFragment } }
 ```
 ```tsx
 import { UserCardFragmentDoc } from './__generated__/UserCard.fragment';
-function UserCard({ user }: { user: UserCardFragment }) {
+const UserCard: FC<{ user: UserCardFragment }> = ({ user }) => {
   return <div>{user.name} — {user.email}</div>;
-}
+};
