@@ -90,9 +90,9 @@ Format the body using this template:
 - [ ] Test step 2
 - [ ] ...
 
-<If --ai-assisted flag: add the signature line below>
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+<If --ai-assisted flag, add the following signature line:>
+<🤖 Generated with [Claude Code](https://claude.com/claude-code)>
+<If --ai-assisted is NOT set, omit the signature line entirely>
 ```
 
 Create the PR:
@@ -109,7 +109,8 @@ gh pr create \
 <body content>
 EOF
 )" \
-  --draft
+  --draft \
+  --assignee @me
 ```
 
 **Always create as draft** — no exceptions.
