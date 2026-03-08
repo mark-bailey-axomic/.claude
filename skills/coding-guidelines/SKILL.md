@@ -5,7 +5,7 @@ description: >
   Triggers on: code writing, code review, refactoring, PR review, implementing features, fixing bugs.
 metadata:
   version: 1.0
-  last_updated: 07/03/2026 00:57
+  last_updated: 08/03/2026 19:02
 ---
 
 # Coding Guidelines
