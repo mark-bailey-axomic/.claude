@@ -20,6 +20,8 @@ Read and follow: <https://github.com/airbnb/javascript>
 - Declare variables closest to where they're used
 - One declaration per line
 - Destructure objects/arrays when accessing multiple properties
+- Never use a variable or reference before it's defined; function declarations may be hoisted intentionally
+- Avoid explicit `undefined` — let missing values, optional chaining, and void returns convey it naturally. When an explicit "no value" is truly unavoidable, prefer `void 0` for primitives or conditional property assignment for objects/arrays
 
 ## Naming
 
@@ -37,6 +39,9 @@ Read and follow: <https://github.com/airbnb/javascript>
 - Max 3 parameters; use an options object beyond that
 - Pure functions where possible — no side effects, same input = same output
 - Avoid nested functions deeper than 2 levels
+- Never conditionally assign functions — define distinct named functions and select between them, or use a strategy pattern
+- Use implicit returns and omit braces on arrow functions when the body is a single expression
+- Omit braces on single-statement `if`/`else`/loop blocks
 
 ## Objects & Arrays
 
@@ -76,6 +81,12 @@ Read and follow: <https://github.com/airbnb/javascript>
 - Template literals over concatenation
 - Tagged templates for complex interpolation (SQL, HTML)
 - Use `.includes()` over `.indexOf() !== -1`
+
+## Control Flow
+
+- Keep ternaries flat — never nest one ternary inside another; extract to variables or use `if`/`else` instead
+- Flatten nested `if` statements with early returns, guard clauses, or by extracting helper functions
+- Prefer a single level of branching per function; if you need two, the inner branch probably belongs in its own function
 
 ## Equality & Comparisons
 
