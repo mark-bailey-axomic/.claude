@@ -57,6 +57,18 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/tailwind.md` - Tailwind CSS utility-first workflow (extends css-or-sass.md)
 - `references/test.md` - Testing strategy & patterns
 
+## Assets
+
+Supplementary resources in `assets/` for styling decisions and code review examples.
+
+### `assets/styling-decision-tree.md`
+
+Reference when a user asks which styling approach to use or when starting a new component in a project with multiple styling tools. Provides a flowchart mapping project context (Mantine, Tailwind, SASS, plain CSS) to the correct approach.
+
+### `assets/before-after-snippets.md`
+
+Load relevant snippets during code review to show concrete before/after examples when pointing out anti-patterns. Covers: Tailwind, React, TypeScript, CSS, Testing, JavaScript.
+
 ## Scripts
 
 Utility scripts in `scripts/` support the skill's workflows. Resolve script paths relative to this SKILL.md file. Run via `bash` and pass the user's project directory as an argument.
