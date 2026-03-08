@@ -54,4 +54,5 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/react.md` - React component patterns & hooks (extends typescript.md)
 - `references/mantine.md` - Mantine component library patterns (extends react.md)
 - `references/css-or-sass.md` - Styling conventions
+- `references/tailwind.md` - Tailwind CSS utility-first workflow (extends css-or-sass.md)
 - `references/test.md` - Testing strategy & patterns
