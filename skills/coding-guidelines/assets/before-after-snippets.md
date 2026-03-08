@@ -21,8 +21,8 @@ import styles from './Card.module.css';
 ```
 ```css
 /* Card.module.css */
-.card { display: flex; align-items: center; gap: 1rem; border-radius: 0.5rem; background: white; padding: 1.5rem; box-shadow: 0 4px 6px rgb(0 0 0 / 0.1); }
-.title { font-size: 1.125rem; font-weight: 600; color: var(--color-gray-900); }
+.card { @apply flex items-center gap-4 rounded-lg bg-white p-6 shadow-md; }
+.title { @apply text-lg font-semibold text-gray-900; }
 ```
 
 ---
