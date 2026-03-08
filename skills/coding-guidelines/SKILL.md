@@ -56,3 +56,19 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/css-or-sass.md` - Styling conventions
 - `references/tailwind.md` - Tailwind CSS utility-first workflow (extends css-or-sass.md)
 - `references/test.md` - Testing strategy & patterns
+
+## Scripts
+
+Utility scripts in `scripts/` support the skill's workflows. Resolve script paths relative to this SKILL.md file. Run via `bash` and pass the user's project directory as an argument.
+
+### `scripts/select-guidelines.sh [PROJECT_DIR]`
+
+Run at the **start of any coding task** to auto-detect which reference files are relevant for the current project. Reads `package.json` and project files, outputs one reference filename per line.
+
+### `scripts/tailwind-lint.sh [DIRECTORY]`
+
+Run during **code review when Tailwind is in use** to find inline Tailwind utility classes in JSX/TSX files that haven't been extracted to CSS Modules. Reports file:line matches with a summary count.
+
+### `scripts/pr-checklist.sh [--staged] [BASE_BRANCH]`
+
+Run during **PR review** to generate a focused markdown review checklist based on changed files. Auto-detects base branch (staging > development > main) if not specified. Categorizes changes and includes relevant guideline items.
