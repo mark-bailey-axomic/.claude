@@ -6,6 +6,10 @@
 
 - At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
 
+## Coding
+
+- Always use TDD: write failing tests first, then implement to make them pass.
+
 ## Github
 
 - Your primary method for interacting with Github should be the Github CLI (gh).
