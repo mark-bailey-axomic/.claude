@@ -21,8 +21,28 @@ HELP
   exit 0
 }
 
-# Auto-detect base branch: staging > development > main
+# Detect base branch: find nearest parent branch, fallback to staging > development > main
 detect_base_branch() {
+  local current
+  current=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+  # Try to find the parent branch via decorated ancestor commits
+  if [[ -n "$current" && "$current" != "HEAD" ]]; then
+    local parent
+    # Walk decorated ancestors, extract remote branch names, skip current branch
+    parent=$(git log --decorate --simplify-by-decoration --oneline --format='%D' \
+      | grep -oE 'origin/[^ ,]+' \
+      | sed 's|origin/||' \
+      | grep -v "^${current}$" \
+      | grep -v '^HEAD$' \
+      | head -1 2>/dev/null || true)
+    if [[ -n "$parent" ]]; then
+      echo "$parent"
+      return
+    fi
+  fi
+
+  # Fallback: first existing of staging > development > main
   for branch in staging development main; do
     if git rev-parse --verify "$branch" &>/dev/null; then
       echo "$branch"
