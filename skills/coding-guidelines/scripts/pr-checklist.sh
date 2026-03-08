@@ -72,6 +72,7 @@ has_scss=false
 has_test=false
 has_tailwind=false
 has_mantine=false
+has_graphql=false
 
 while IFS= read -r file; do
   case "$file" in
@@ -97,6 +98,12 @@ fi
 # Check for Mantine imports
 if echo "$DIFF_CONTENT" | grep -qE "from ['\"]@mantine/"; then
   has_mantine=true
+fi
+
+# Check for GraphQL patterns
+if echo "$DIFF_CONTENT" | grep -qE "(useQuery|useMutation|gql\`|\.graphql)" || \
+   echo "$CHANGED_FILES" | grep -qE '\.graphql$'; then
+  has_graphql=true
 fi
 
 # Generate checklist
@@ -156,6 +163,18 @@ if [[ "$has_tailwind" == "true" ]]; then
   echo "- [ ] No conflicting utilities on same element"
   echo "- [ ] Responsive utilities use mobile-first approach"
   echo "- [ ] Design tokens (theme values) used over arbitrary values"
+  echo ""
+fi
+
+# GraphQL
+if [[ "$has_graphql" == "true" ]]; then
+  echo "## GraphQL"
+  echo "- [ ] Queries use codegen TypedDocumentNode — no raw gql with manual types"
+  echo "- [ ] No dynamic query construction or string interpolation"
+  echo "- [ ] All three states handled: data, loading, error"
+  echo "- [ ] Fragments colocated with consuming components"
+  echo "- [ ] Operations named VerbNoun in PascalCase"
+  echo "- [ ] refetchQueries uses document nodes, not strings"
   echo ""
 fi
 

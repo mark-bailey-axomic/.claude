@@ -234,3 +234,79 @@ const user = await getUser(id);
 const orders = await getOrders(user.id);
 const items = await getItems(orders[0].id);
 ```
+
+---
+
+## GraphQL — Typed Document Node over Raw gql
+
+**Bad** — raw `gql` with manual generics:
+```tsx
+import { gql, useQuery } from '@apollo/client';
+
+interface GetUserData { user: { id: string; name: string } }
+interface GetUserVars { id: string }
+
+const GET_USER = gql`query GetUser($id: ID!) { user(id: $id) { id name } }`;
+
+const { data } = useQuery<GetUserData, GetUserVars>(GET_USER, { variables: { id } });
+```
+
+**Good** — codegen `TypedDocumentNode`:
+```tsx
+import { useQuery } from '@apollo/client';
+import { GetUserDocument } from './__generated__/GetUser';
+
+const { data, loading, error } = useQuery(GetUserDocument, { variables: { id } });
+// types inferred automatically — data is GetUserQuery, variables is GetUserQueryVariables
+```
+
+## GraphQL — No Dynamic Query Construction
+
+**Bad** — string interpolation in query:
+```tsx
+const query = gql`
+  query GetItems {
+    items { id name ${includePrice ? 'price' : ''} }
+  }
+`;
+```
+
+**Good** — static query with variables:
+```graphql
+# GetItems.graphql
+query GetItems($includePrice: Boolean!) {
+  items { id name price @include(if: $includePrice) }
+}
+```
+```tsx
+const { data } = useQuery(GetItemsDocument, { variables: { includePrice: true } });
+```
+
+## GraphQL — Fragment Colocation
+
+**Bad** — parent fetches all fields for child:
+```graphql
+query GetDashboard {
+  user { id name email avatar role lastLogin preferences { theme locale } }
+}
+```
+```tsx
+function UserCard({ user }: { user: GetDashboardQuery['user'] }) {
+  return <div>{user.name} — {user.email}</div>;
+}
+```
+
+**Good** — child declares its own fragment:
+```graphql
+# UserCard.fragment.graphql
+fragment UserCardFragment on User { id name email avatar }
+```
+```graphql
+# GetDashboard.graphql
+query GetDashboard { user { ...UserCardFragment } }
+```
+```tsx
+import { UserCardFragmentDoc } from './__generated__/UserCard.fragment';
+function UserCard({ user }: { user: UserCardFragment }) {
+  return <div>{user.name} — {user.email}</div>;
+}

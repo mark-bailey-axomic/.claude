@@ -53,6 +53,7 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/typescript.md` - TS type system & strict mode (extends javascript.md)
 - `references/react.md` - React component patterns & hooks (extends typescript.md)
 - `references/mantine.md` - Mantine component library patterns (extends react.md)
+- `references/graphql.md` - GraphQL + Apollo codegen patterns (extends typescript.md)
 - `references/css-or-sass.md` - Styling conventions
 - `references/tailwind.md` - Tailwind CSS utility-first workflow (extends css-or-sass.md)
 - `references/test.md` - Testing strategy & patterns
@@ -67,7 +68,7 @@ Reference when a user asks which styling approach to use or when starting a new 
 
 ### `assets/before-after-snippets.md`
 
-Load relevant snippets during code review to show concrete before/after examples when pointing out anti-patterns. Covers: Tailwind, React, TypeScript, CSS, Testing, JavaScript.
+Load relevant snippets during code review to show concrete before/after examples when pointing out anti-patterns. Covers: Tailwind, React, TypeScript, CSS, Testing, JavaScript, GraphQL.
 
 ## Scripts
 

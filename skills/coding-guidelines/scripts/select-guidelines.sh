@@ -57,6 +57,11 @@ if has_dep "@mantine/"; then
   echo "mantine.md"
 fi
 
+# GraphQL (Apollo + codegen)
+if has_dep "@apollo/client" || has_dep "graphql" || has_dep "@graphql-codegen/"; then
+  echo "graphql.md"
+fi
+
 # Tailwind: dep or config exists
 if has_dep "tailwindcss" || compgen -G "$PROJECT_DIR/tailwind.config.*" &>/dev/null; then
   echo "tailwind.md"
