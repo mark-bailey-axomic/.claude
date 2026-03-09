@@ -274,7 +274,10 @@ If `pass: true` → proceed to Stage 11
 
 1. If any post-PR commits occurred (review fixes or verification gaps):
    - Invoke `/pr` skill with args: `--update --jira {TICKET-ID} --ai-assisted`
-2. Output a concise summary:
+2. Clean up worktree:
+   - Remove the worktree: `git worktree remove ../{branch-name}`
+   - Delete the local branch if fully merged: `git branch -d {branch-name}`
+3. Output a concise summary:
 
 ```
 Done.
