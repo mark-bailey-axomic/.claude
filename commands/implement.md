@@ -1,9 +1,9 @@
 ---
-name: automate
-description: 'Automate the complete workflow of reading a JIRA ticket, creating a branch, planning work via a PRD, implementing changes, committing, creating a PR, self-reviewing, and verifying against ticket requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123).'
+name: implement
+description: 'Implement a JIRA ticket end-to-end: read ticket, create branch, plan via PRD, implement changes, commit, create PR, self-review, and verify against requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123).'
 ---
 
-# Automate
+# Implement
 
 Full lifecycle automation: JIRA ticket → branch → PRD → implementation → PR → review → verified.
 
