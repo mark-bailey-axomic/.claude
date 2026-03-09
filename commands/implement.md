@@ -23,6 +23,7 @@ Total orchestrator context must stay under 40% of the context window. Delegate a
 1. Read ticket (sub-agent)
 2. Create branch + worktree (orchestrator)
 3. Write PRD (sub-agent)
+3.5. Load coding guidelines (orchestrator — invoke /coding-guidelines once, cache output)
 4. Implement + commit tasks (loop: orchestrator + implementer sub-agents)
 7. Create PR (orchestrator via /pr skill)
 8. Self-review (orchestrator via /review skill + implementer sub-agents)
@@ -123,6 +124,12 @@ Tasks must be **functional goals** (e.g. "Add rate limiting to the login endpoin
 
 ---
 
+## Stage 3.5: Load Coding Guidelines
+
+Before entering the implementation loop, the orchestrator invokes the `/coding-guidelines` skill once and captures its output as `codingGuidelines`. This text is passed verbatim to every implementer and reviewer sub-agent as part of their input.
+
+---
+
 ## Stage 4–6: Implement Tasks (Loop)
 
 Repeat until all PRD tasks are `[x]`:
@@ -134,9 +141,10 @@ Repeat until all PRD tasks are `[x]`:
      - Ticket context summary (2–3 sentences: what the ticket is, why this task matters)
      - Worktree path
      - Relevant file paths if known from prior tasks
+     - `codingGuidelines` from Stage 3.5 — sub-agent MUST follow these
    - Actions:
      - Explore the codebase to understand structure
-     - Implement the task following the coding-guidelines skill if available
+     - Implement the task strictly following the provided coding guidelines
      - Do NOT read or modify PRD or review.json
    - Return:
 
@@ -164,6 +172,7 @@ Repeat until all PRD tasks are `[x]`:
      ```
 
    - Merge returned `changedFiles` into implementer's `changedFiles`
+
 4. Commit the work (orchestrator):
    - Verify branch name starts with `{EMPLOYEE_CODE}_` or `claude_` — abort if not
    - Stage only the files returned by the implementer + any fix files: `git add <file>` per file
@@ -191,7 +200,7 @@ Repeat until all PRD tasks are `[x]`:
 3. If issues found:
    - Write `review.json` in the worktree root (see format below)
    - For each comment in review.json, spawn an **implementer** sub-agent:
-     - Input: the specific issue, file path, line number, ticket context
+     - Input: the specific issue, file path, line number, ticket context, `codingGuidelines` from Stage 3.5
      - Same return format as Stage 4
    - Commit fixes (same rules as Stage 4–6 commits)
    - Delete `review.json`
