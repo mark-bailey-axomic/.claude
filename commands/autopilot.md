@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Automate the complete workflow of reading a JIRA ticket, creating a branch, planning work via a PRD, implementing changes, committing, creating a PR, self-reviewing, and verifying against ticket requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123).
+description: "Automate the complete workflow of reading a JIRA ticket, creating a branch, planning work via a PRD, implementing changes, committing, creating a PR, self-reviewing, and verifying against ticket requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123)."
 ---
 
 # Autopilot
