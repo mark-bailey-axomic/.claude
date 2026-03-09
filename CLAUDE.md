@@ -10,6 +10,10 @@
 
 - Always use TDD: write failing tests first, then implement to make them pass.
 
+## Code Reviews
+
+- Always end review comments with signature: `🤖 Reviewed by [Claude Code](https://claude.com/claude-code)`
+
 ## Github
 
 - Your primary method for interacting with Github should be the Github CLI (gh).
