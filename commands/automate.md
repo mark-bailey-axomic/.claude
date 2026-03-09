@@ -26,8 +26,9 @@ Total orchestrator context must stay under 40% of the context window. Delegate a
 4. Implement + commit tasks (loop: orchestrator + implementer sub-agents)
 7. Create PR (orchestrator via /pr skill)
 8. Self-review (orchestrator via /review skill + implementer sub-agents)
-9. Verify against ticket (verifier sub-agent)
-10. Finalize
+9. Wait for PR checks (orchestrator — fix failures, mark ready for review)
+10. Verify against ticket (verifier sub-agent)
+11. Finalize
 ```
 
 ---
@@ -215,7 +216,26 @@ Repeat until all PRD tasks are `[x]`:
 
 ---
 
-## Stage 9: Verify Against Ticket
+## Stage 9: Wait for PR Checks
+
+1. Poll PR check status: `gh pr checks {PR_URL} --watch`
+2. If all checks pass:
+   - Mark PR as ready for review: `gh pr ready {PR_URL}`
+   - Read `GITHUB_REVIEWERS` from `.env` — if set (comma-separated usernames), add reviewers: `gh pr edit {PR_URL} --add-reviewer {reviewer1},{reviewer2}`
+   - Proceed to Stage 10
+3. If any check fails:
+   - Spawn a **check-fixer** sub-agent:
+     - Input: failed check names/logs, worktree path, changed files
+     - Actions: diagnose failures, fix code
+     - Return: `{ "changedFiles": [...], "summary": "..." }`
+   - Commit fixes (same rules as Stage 4–6 commits)
+   - Push changes
+   - Loop back to Stage 8 (self-review) then return here
+   - Maximum 3 fix attempts — after that, surface failures to user and proceed
+
+---
+
+## Stage 10: Verify Against Ticket
 
 Spawn a **verifier** sub-agent:
 
@@ -243,14 +263,14 @@ If `pass: false`:
 
 - Mark relevant PRD tasks as `[!]` (needs revision)
 - Add new PRD tasks for each gap
-- Loop back to Stage 4–6, then 7 (update PR), then 8, then 9 again
+- Loop back to Stage 4–6, then 7 (update PR), then 8, then 9, then 10 again
 - Maximum 2 verification loops — after that, surface gaps to user and proceed
 
-If `pass: true` → proceed to Stage 10
+If `pass: true` → proceed to Stage 11
 
 ---
 
-## Stage 10: Finalize
+## Stage 11: Finalize
 
 1. If any post-PR commits occurred (review fixes or verification gaps):
    - Invoke `/pr` skill with args: `--update --jira {TICKET-ID} --ai-assisted`
