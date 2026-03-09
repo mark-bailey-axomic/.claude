@@ -146,15 +146,32 @@ Repeat until all PRD tasks are `[x]`:
      }
      ```
 
-3. Commit the work (orchestrator):
+3. Spawn a **quality-checker** sub-agent:
+   - Input: worktree path, changed files from implementer
+   - Actions:
+     - Run tests (e.g. `npm test`, `pytest`, etc.)
+     - Run linter (e.g. `npm run lint`, `eslint`, etc.)
+     - Run formatter (e.g. `npm run format:check`, `npx prettier --check`, etc.)
+     - If any check fails → fix issues, re-run checks until all pass
+   - Return:
+
+     ```json
+     {
+       "changedFiles": ["src/foo.ts"],
+       "summary": "Fixed lint warnings and formatting in foo.ts"
+     }
+     ```
+
+   - Merge returned `changedFiles` into implementer's `changedFiles`
+4. Commit the work (orchestrator):
    - Verify branch name starts with `{EMPLOYEE_CODE}_` or `claude_` — abort if not
-   - Stage only the files returned by the implementer: `git add <file>` per file
+   - Stage only the files returned by the implementer + any fix files: `git add <file>` per file
    - **Never** `git add .` or `git add -A`
    - **Never** stage `prd-*.md` or `review.json`
    - Commit message: `{TICKET-ID}: {concise description}` (concise, sacrifice grammar)
-4. Mark task `[x]` in PRD
-5. Accumulate `changedFiles` in orchestrator state
-6. Loop to next `[ ]` task
+5. Mark task `[x]` in PRD
+6. Accumulate `changedFiles` in orchestrator state
+7. Loop to next `[ ]` task
 
 ---
 
