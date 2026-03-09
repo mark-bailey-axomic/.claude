@@ -73,14 +73,14 @@ The orchestrator handles this directly.
    - lowercase, replace spaces/special chars with hyphens, max 40 chars, strip trailing hyphens
 4. Branch name: `{EMPLOYEE_CODE}_{TICKET-ID}_{sanitized-title}_{worktype}`
    - Example: `mba_PROJ-123_add-user-auth-endpoint_feature`
-5. Create and checkout branch: `git checkout -b {branch-name}`
-6. Create a git worktree for isolated work:
+5. Create branch without checking it out: `git branch {branch-name}`
+6. Create a git worktree for the new branch (this checks it out in the worktree, not the current working directory):
 
    ```bash
    git worktree add ../{branch-name} {branch-name}
    ```
 
-7. Store worktree path — all subsequent sub-agents operate within it
+7. Store worktree path — all subsequent sub-agents operate within it. The orchestrator's original branch remains checked out.
 
 ---
 
