@@ -1,9 +1,9 @@
 ---
-name: autopilot
-description: "Automate the complete workflow of reading a JIRA ticket, creating a branch, planning work via a PRD, implementing changes, committing, creating a PR, self-reviewing, and verifying against ticket requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123)."
+name: automate
+description: 'Automate the complete workflow of reading a JIRA ticket, creating a branch, planning work via a PRD, implementing changes, committing, creating a PR, self-reviewing, and verifying against ticket requirements. Takes a single required argument: the JIRA issue ID (e.g. PROJ-123).'
 ---
 
-# Autopilot
+# Automate
 
 Full lifecycle automation: JIRA ticket → branch → PRD → implementation → PR → review → verified.
 
@@ -39,11 +39,12 @@ Spawn a **jira-reader** sub-agent:
 - Input: JIRA issue ID
 - Actions:
   1. Fetch ticket: `acli jira issue view {TICKET-ID}`
-  2. Check assignee:
+  2. Check labels — if `ai-ready` label is NOT present → **ABORT** with message: "Ticket missing `ai-ready` label. Aborting."
+  3. Check assignee:
      - If unassigned → assign to current user: `acli jira issue assign {TICKET-ID} --account-id me`
      - If assigned to current user → proceed
      - If assigned to anyone else → **ABORT** with message: "Ticket assigned to {assignee}. Aborting."
-  3. Transition to "In Progress": `acli jira issue transition {TICKET-ID} "In Progress"`
+  4. Transition to "In Progress": `acli jira issue transition {TICKET-ID} "In Progress"`
 - Return as structured object (orchestrator caches this, never re-fetches):
 
 ```json
