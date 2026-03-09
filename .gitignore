@@ -3,6 +3,7 @@
 history.jsonl
 stats-cache.json
 mcp-needs-auth-cache.json
+firebase-debug.log
 .env
 
 backups/
