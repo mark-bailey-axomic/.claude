@@ -74,9 +74,9 @@ Load relevant snippets during code review to show concrete before/after examples
 
 Utility scripts in `scripts/` support the skill's workflows. Resolve script paths relative to this SKILL.md file. Run via `bash` and pass the user's project directory as an argument.
 
-### `scripts/select-guidelines.sh [PROJECT_DIR]`
+### `scripts/select-guidelines.sh [--diff | PROJECT_DIR]`
 
-Run at the **start of any coding task** to auto-detect which reference files are relevant for the current project. Reads `package.json` and project files, outputs one reference filename per line.
+Run at the **start of any coding task or code review** to auto-detect which reference files are relevant. Accepts either a project directory path (scans `package.json` and project files), or `--diff` to read a unified diff from stdin (e.g., `gh pr diff 123 | select-guidelines.sh --diff`). Outputs one reference filename per line.
 
 ### `scripts/tailwind-lint.sh [DIRECTORY]`
 
