@@ -12,6 +12,7 @@
 
 ## Code Reviews
 
+- When performing code reviews (including /review), always invoke the coding-guidelines skill first.
 - Always end review comments with signature: `🤖 Reviewed by [Claude Code](https://claude.com/claude-code)`
 
 ## Github
