@@ -73,6 +73,16 @@ if [[ "${1:-}" == "--diff" ]]; then
     add "tailwind.md"
   fi
 
+  # Next.js
+  if echo "$FILES" | grep -qE 'next\.config' || echo "$ADDED" | grep -qE 'from .next/|next/image|next/font|next/link|next/navigation'; then
+    add "nextjs.md"
+  fi
+
+  # Astro
+  if echo "$FILES" | grep -qE '\.astro$|astro\.config' || echo "$ADDED" | grep -qE 'from .astro:|astro:content|astro:transitions'; then
+    add "astro.md"
+  fi
+
   # Tests
   if echo "$FILES" | grep -qE '\.(test|spec)\.[jt]sx?$'; then
     add "test.md"
@@ -112,6 +122,16 @@ else
 
   if has_dep "tailwindcss" || compgen -G "$PROJECT_DIR/tailwind.config.*" &>/dev/null; then
     add "tailwind.md"
+  fi
+
+  # Next.js
+  if has_dep "next" || [[ -f "$PROJECT_DIR/next.config.js" ]] || [[ -f "$PROJECT_DIR/next.config.mjs" ]] || [[ -f "$PROJECT_DIR/next.config.ts" ]]; then
+    add "nextjs.md"
+  fi
+
+  # Astro
+  if has_dep "astro" || compgen -G "$PROJECT_DIR/astro.config.*" &>/dev/null; then
+    add "astro.md"
   fi
 
   if has_dep "jest" || has_dep "vitest" || has_dep "@testing-library/"; then
