@@ -52,8 +52,10 @@ Guidelines chain where applicable — each file extends its parent:
 - `references/javascript.md` - JS conventions & patterns (base)
 - `references/typescript.md` - TS type system & strict mode (extends javascript.md)
 - `references/react.md` - React component patterns & hooks (extends typescript.md)
+- `references/nextjs.md` - Next.js App Router patterns & server components (extends react.md)
 - `references/mantine.md` - Mantine component library patterns (extends react.md)
 - `references/graphql.md` - GraphQL + Apollo codegen patterns (extends typescript.md)
+- `references/astro.md` - Astro conventions & islands architecture (extends typescript.md)
 - `references/css-or-sass.md` - Styling conventions
 - `references/tailwind.md` - Tailwind CSS utility-first workflow (extends css-or-sass.md)
 - `references/test.md` - Testing strategy & patterns
