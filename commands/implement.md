@@ -21,9 +21,11 @@ Total orchestrator context must stay under 40% of the context window. Delegate a
 
 ```
 1. Read ticket (sub-agent)
+1.5. Enrich Confluence links (parallel sub-agents)
 2. Create branch + worktree (orchestrator)
 3. Write PRD (sub-agent)
 3.5. Load coding guidelines (orchestrator — invoke /coding-guidelines once, cache output)
+3.6. Load frontend design context (orchestrator — invoke /frontend-design if UI tasks detected, cache output)
 4. Implement + commit tasks (loop: orchestrator + implementer sub-agents)
 7. Create PR (orchestrator via /pr skill)
 8. Self-review (orchestrator via /review skill + implementer sub-agents)
@@ -47,6 +49,26 @@ Spawn a **jira-reader** sub-agent:
      - If assigned to current user → proceed
      - If assigned to anyone else → **ABORT** with message: "Ticket assigned to {assignee}. Aborting."
   4. Transition to "In Progress": `acli jira issue transition {TICKET-ID} "In Progress"`
+  5. Scan `description` + `acceptanceCriteria` for Confluence URLs matching `https://{instance}.atlassian.net/wiki/spaces/{space}/pages/{pageId}/{title}` — collect as `confluenceLinks`
+  6. Evaluate ticket clarity — **unclear** if: description empty/vague, no acceptance criteria, ambiguous/contradictory requirements, or missing critical implementation context
+  7. If unclear:
+     - Get reporter account ID from ticket metadata
+     - Add comment @mentioning reporter with specific gaps, signed as Claude Code:
+
+       ```
+       acli jira issue comment add {TICKET-ID} --body "[~accountid:{reporterAccountId}] Ticket needs more detail before implementation.
+
+       **Missing/unclear:**
+       - {specific gaps}
+
+       Please update and re-add \`ai-ready\` label when ready.
+
+       — _Claude Code_"
+       ```
+
+     - Remove `ai-ready` label: `acli jira issue labels remove {TICKET-ID} ai-ready`
+     - **ABORT** with message: "Ticket unclear — commented requesting info from reporter. Aborting."
+
 - Return as structured object (orchestrator caches this, never re-fetches):
 
 ```json
@@ -56,9 +78,46 @@ Spawn a **jira-reader** sub-agent:
   "description": "...",
   "issueType": "Story|Bug|Task|...",
   "acceptanceCriteria": ["...", "..."],
-  "subtasks": ["..."]
+  "subtasks": ["..."],
+  "reporterAccountId": "...",
+  "confluenceLinks": ["https://..."]
 }
 ```
+
+---
+
+## Stage 1.5: Enrich Confluence Links
+
+If `confluenceLinks` from Stage 1 is empty, skip to Stage 2.
+
+For each **unique** Confluence page, spawn a **confluence-reader** sub-agent in parallel:
+
+- Input: page URL, ticket metadata (id, title, description, acceptanceCriteria)
+- Actions:
+  1. Extract `pageId` from URL
+  2. Fetch page content via Confluence REST API (acli preferred, curl fallback):
+
+     ```bash
+     # Using acli (preferred)
+     acli confluence --action getPageSource --id {pageId} --outputFormat markdown
+     # Fallback: curl with Confluence REST API v2
+     curl -s -H "Authorization: Bearer $CONFLUENCE_TOKEN" \
+       "https://{instance}.atlassian.net/wiki/api/v2/pages/{pageId}?body-format=atlas_doc_format" \
+       | jq -r '.body.atlas_doc_format.value'
+     ```
+
+  3. Summarize only sections relevant to the ticket — keep under 500 words per page
+- Return:
+
+```json
+{
+  "pageUrl": "https://...",
+  "pageTitle": "...",
+  "relevantContext": "Summarized content relevant to the ticket..."
+}
+```
+
+Orchestrator stores result as `confluenceContext` (array of `{ pageUrl, pageTitle, relevantContext }`). This is passed to the PRD writer and implementer sub-agents.
 
 ---
 
@@ -66,7 +125,7 @@ Spawn a **jira-reader** sub-agent:
 
 The orchestrator handles this directly.
 
-1. Read `EMPLOYEE_CODE` from `.env` in the project root
+1. Read `EMPLOYEE_CODE` from `.env` in the user-level Claude directory (`~/.claude/.env`)
 2. Derive work type from `issueType`:
    - `bug` or `Bug` → `bug`
    - `defect` or `Defect` → `defect`
@@ -77,13 +136,14 @@ The orchestrator handles this directly.
 4. Branch name: `{EMPLOYEE_CODE}_{TICKET-ID}_{sanitized-title}_{worktype}`
    - Example: `mba_PROJ-123_add-user-auth-endpoint_feature`
 5. Create branch without checking it out: `git branch {branch-name}`
-6. Create a git worktree for the new branch (this checks it out in the worktree, not the current working directory):
+6. Get repo name: `REPO_NAME=$(gh repo view --json name -q .name)`
+7. Create a git worktree for the new branch (this checks it out in the worktree, not the current working directory):
 
    ```bash
-   git worktree add ../{branch-name} {branch-name}
+   git worktree add ~/.claude/worktrees/${REPO_NAME}/{branch-name} {branch-name}
    ```
 
-7. Store worktree path — all subsequent sub-agents operate within it. The orchestrator's original branch remains checked out.
+8. Store worktree path — all subsequent sub-agents operate within it. The orchestrator's original branch remains checked out.
 
 ---
 
@@ -91,7 +151,7 @@ The orchestrator handles this directly.
 
 Spawn a **prd-writer** sub-agent:
 
-- Input: ticket metadata from Stage 1
+- Input: ticket metadata from Stage 1, `confluenceContext` from Stage 1.5 (if any)
 - Actions: create `prd-{TICKET-ID}.md` in the **worktree root** (not project root)
 - PRD format:
 
@@ -130,6 +190,16 @@ Before entering the implementation loop, the orchestrator invokes the `/coding-g
 
 ---
 
+## Stage 3.6: Load Frontend Design Context
+
+If any PRD task involves frontend/UI work (components, pages, styles, layouts), the orchestrator invokes the `/frontend-design` skill once and captures its output as `frontendDesignContext`. Skip if all tasks are backend-only.
+
+Detection heuristic — invoke if PRD tasks mention any of: UI, component, page, view, form, layout, modal, dialog, style, CSS, frontend, template, markup.
+
+This text is passed verbatim to every implementer sub-agent alongside `codingGuidelines`.
+
+---
+
 ## Stage 4–6: Implement Tasks (Loop)
 
 Repeat until all PRD tasks are `[x]`:
@@ -141,7 +211,9 @@ Repeat until all PRD tasks are `[x]`:
      - Ticket context summary (2–3 sentences: what the ticket is, why this task matters)
      - Worktree path
      - Relevant file paths if known from prior tasks
+     - `confluenceContext` from Stage 1.5 (if any)
      - `codingGuidelines` from Stage 3.5 — sub-agent MUST follow these
+     - `frontendDesignContext` from Stage 3.6 (if available) — sub-agent MUST follow these for any UI work
    - Actions:
      - Explore the codebase to understand structure
      - Implement the task strictly following the provided coding guidelines
@@ -284,7 +356,7 @@ If `pass: true` → proceed to Stage 11
 1. If any post-PR commits occurred (review fixes or verification gaps):
    - Invoke `/pr` skill with args: `--update --jira {TICKET-ID} --ai-assisted`
 2. Clean up worktree:
-   - Remove the worktree: `git worktree remove ../{branch-name}`
+   - Remove the worktree: `git worktree remove ~/.claude/worktrees/${REPO_NAME}/{branch-name}`
    - Delete the local branch if fully merged: `git branch -d {branch-name}`
 3. Output a concise summary:
 
