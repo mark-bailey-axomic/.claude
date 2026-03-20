@@ -32,8 +32,7 @@ detect_base_branch() {
     # Walk decorated ancestors, extract remote branch names, skip current branch
     parent=$(git log --decorate --simplify-by-decoration --oneline --format='%D' \
       | grep -oE 'origin/[^ ,]+' \
-      | sed 's|origin/||' \
-      | grep -v "^${current}$" \
+      | grep -v "^origin/${current}$" \
       | grep -v '^HEAD$' \
       | head -1 2>/dev/null || true)
     if [[ -n "$parent" ]]; then
@@ -192,12 +191,13 @@ fi
 # GraphQL
 if [[ "$has_graphql" == "true" ]]; then
   echo "## GraphQL"
-  echo "- [ ] Queries use codegen TypedDocumentNode — no raw gql with manual types"
+  echo "- [ ] Operations use gql tagged template literals (no ad-hoc GraphQL strings)"
+  echo "- [ ] Generated types used where available (no manual any types)"
   echo "- [ ] No dynamic query construction or string interpolation"
   echo "- [ ] All three states handled: data, loading, error"
   echo "- [ ] Fragments colocated with consuming components"
   echo "- [ ] Operations named VerbNoun in PascalCase"
-  echo "- [ ] refetchQueries uses document nodes, not strings"
+  echo "- [ ] refetchQueries uses document nodes, not string operation names"
   echo ""
 fi
 
