@@ -23,5 +23,18 @@
       }
     }
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./scripts/shell/chain-skills.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
