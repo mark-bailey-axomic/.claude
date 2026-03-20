@@ -47,9 +47,9 @@ Read and follow: <https://github.com/airbnb/javascript/tree/master/react>
   - Avoid object/array deps (use primitives or memoize)
 - `useRef`: for DOM refs and mutable values that don't trigger re-renders
 
-## Memoization (React < 19 only)
+## Memoization
 
-> React 19+ includes automatic memoization via the React Compiler. The rules below only apply to React 18 and earlier.
+> React Compiler is an opt-in build tool (available from React 19) that can automatically optimize re-renders. Whether it is active depends on this repo's build configuration. The rules below apply when the compiler is not enabled.
 
 - Don't memoize by default — measure first
 - `useMemo`: expensive computations or referential stability for child deps

@@ -33,6 +33,7 @@ detect_base_branch() {
     parent=$(git log --decorate --simplify-by-decoration --oneline --format='%D' \
       | grep -oE 'origin/[^ ,]+' \
       | grep -v "^origin/${current}$" \
+      | grep -v '/HEAD$' \
       | grep -v '^HEAD$' \
       | head -1 2>/dev/null || true)
     if [[ -n "$parent" ]]; then
@@ -75,7 +76,7 @@ if [[ "$STAGED" == "true" ]]; then
   CHANGED_FILES=$(git diff --cached --name-only 2>/dev/null || echo "")
   DIFF_CONTENT=$(git diff --cached 2>/dev/null || echo "")
 else
-  CHANGED_FILES=$(git diff --name-only "$BASE_BRANCH"...HEAD 2>/dev/null || echo "")
+  CHANGED_FILES=$(git diff --name-only "$BASE_BRANCH"...HEAD 2>/dev/null) || { echo "Error: cannot resolve base branch '$BASE_BRANCH'. Fetch or specify --staged." >&2; exit 1; }
   DIFF_CONTENT=$(git diff "$BASE_BRANCH"...HEAD 2>/dev/null || echo "")
 fi
 
