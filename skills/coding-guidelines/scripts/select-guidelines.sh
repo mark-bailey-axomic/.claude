@@ -42,6 +42,8 @@ if [[ "${1:-}" == "--diff" ]]; then
   FILES="$(echo "$DIFF_INPUT" | grep -E '^\+\+\+ b/' | sed 's|^+++ b/||' || true)"
   # Extract added lines (skip +++ headers)
   ADDED="$(echo "$DIFF_INPUT" | grep -E '^\+[^+]' || true)"
+  # Extract removed lines (skip --- headers)
+  REMOVED="$(echo "$DIFF_INPUT" | grep -E '^-[^-]' || true)"
 
   # TypeScript
   if echo "$FILES" | grep -qE '\.tsx?$'; then
@@ -58,13 +60,14 @@ if [[ "${1:-}" == "--diff" ]]; then
     add "css-or-sass.md"
   fi
 
-  # Mantine
-  if echo "$ADDED" | grep -qE '@mantine/'; then
+  # Mantine (check both added and removed lines)
+  if echo "$ADDED" | grep -qE '@mantine/' || echo "$REMOVED" | grep -qE '@mantine/'; then
     add "mantine.md"
   fi
 
-  # GraphQL
-  if echo "$ADDED" | grep -qE '@apollo/client|from .graphql|graphql-codegen'; then
+  # GraphQL (check added lines and .graphql/.gql file paths)
+  if echo "$ADDED" | grep -qE '@apollo/client|from .+\.graphql|graphql-codegen' || \
+     echo "$FILES" | grep -qE '\.(graphql|gql)$'; then
     add "graphql.md"
   fi
 
@@ -89,7 +92,7 @@ if [[ "${1:-}" == "--diff" ]]; then
   fi
 
 else
-  # Project directory mode (existing behavior)
+  # Project directory mode (default)
   PROJECT_DIR="${1:-.}"
   PROJECT_DIR="${PROJECT_DIR//\\//}"
   PKG="$PROJECT_DIR/package.json"
@@ -97,7 +100,7 @@ else
   has_dep() {
     local pattern="$1"
     if command -v jq &>/dev/null && [[ -f "$PKG" ]]; then
-      jq -e "(.dependencies // {} | keys[]) + \",\" + ((.devDependencies // {} | keys[]) // empty)" "$PKG" 2>/dev/null | grep -q "$pattern" && return 0
+      jq -r "((.dependencies // {} | keys[]), (.devDependencies // {} | keys[]))" "$PKG" 2>/dev/null | grep -q "$pattern" && return 0
     elif [[ -f "$PKG" ]]; then
       grep -q "\"$pattern" "$PKG" && return 0
     fi

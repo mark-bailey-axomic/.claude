@@ -202,17 +202,17 @@ const items = getItems();
 const count = items.length;
 ```
 
-## JavaScript — Nested Ternary to Guard Clause
+## TypeScript — Nested Ternary to Guard Clause
 
 **Bad** — nested ternary:
-```js
+```ts
 function getLabel(status) {
   return status === 'active' ? 'Active' : status === 'pending' ? 'Pending' : status === 'disabled' ? 'Disabled' : 'Unknown';
 }
 ```
 
 **Good** — guard clauses / map:
-```js
+```ts
 const STATUS_LABELS = { active: 'Active', pending: 'Pending', disabled: 'Disabled' } as const;
 function getLabel(status: string): string { return STATUS_LABELS[status] ?? 'Unknown'; }
 ```

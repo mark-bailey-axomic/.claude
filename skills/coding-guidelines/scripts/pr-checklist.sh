@@ -47,6 +47,9 @@ detect_base_branch() {
     if git rev-parse --verify "$branch" &>/dev/null; then
       echo "$branch"
       return
+    elif git rev-parse --verify "origin/$branch" &>/dev/null; then
+      echo "origin/$branch"
+      return
     fi
   done
   echo "main"
