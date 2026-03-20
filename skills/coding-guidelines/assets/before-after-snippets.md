@@ -38,6 +38,8 @@ class Greeting extends React.Component<{ name: string }> {
 
 **Good** — functional component:
 ```tsx
+import type { FC } from 'react';
+
 const Greeting: FC<{ name: string }> = ({ name }) => {
   return <h1>Hello, {name}</h1>;
 };
@@ -214,7 +216,9 @@ function getLabel(status) {
 **Good** — guard clauses / map:
 ```ts
 const STATUS_LABELS = { active: 'Active', pending: 'Pending', disabled: 'Disabled' } as const;
-function getLabel(status: string): string { return STATUS_LABELS[status] ?? 'Unknown'; }
+function getLabel(status: string): string {
+  return STATUS_LABELS[status as keyof typeof STATUS_LABELS] ?? 'Unknown';
+}
 ```
 
 ## JavaScript — Callback Hell to Async/Await

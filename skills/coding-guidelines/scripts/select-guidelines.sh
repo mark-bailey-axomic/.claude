@@ -65,9 +65,10 @@ if [[ "${1:-}" == "--diff" ]]; then
     add "mantine.md"
   fi
 
-  # GraphQL (check added lines and .graphql/.gql file paths)
-  if echo "$ADDED" | grep -qE '@apollo/client|from .+\.graphql|graphql-codegen' || \
-     echo "$FILES" | grep -qE '\.(graphql|gql)$'; then
+  # GraphQL (check added/removed lines, gql usage, and .graphql/.gql file paths)
+  if echo "$ADDED" | grep -qE '@apollo/client|from .+\.graphql|graphql-codegen|gql`' || \
+     echo "$REMOVED" | grep -qE 'gql`' || \
+     echo "$FILES" | grep -qE '\.(graphql|gql)$|__generated__/|\.generated\.[jt]sx?$'; then
     add "graphql.md"
   fi
 
