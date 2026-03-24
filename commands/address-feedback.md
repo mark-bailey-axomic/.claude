@@ -1,13 +1,13 @@
 ---
 name: address-feedback
-description: Address PR review feedback end-to-end. Fetches PR comments, opens worktree, spawns agents to address valid feedback, reacts/replies to each comment, pushes and re-requests review. Takes optional PR number/URL, --reviewer filter, --dry-run flag.
+description: Address PR review feedback end-to-end. Fetches PR comments, opens worktree, spawns agents to address valid feedback, reacts/replies to each comment, pushes and re-requests review. Takes optional PR number/URL, --reviewer filter, --dry-run flag, --include-bots flag.
 ---
 
 # Address Feedback
 
 Automate PR review feedback: fetch comments -> classify -> address -> react/reply -> push.
 
-**Input:** `$ARGUMENTS` — PR number, URL, or empty (auto-detect from branch). Optional `--reviewer <user>` filter, `--dry-run` flag.
+**Input:** `$ARGUMENTS` — PR number, URL, or empty (auto-detect from branch). Optional `--reviewer <user>` filter, `--dry-run` flag, `--include-bots` flag.
 
 ---
 
@@ -40,6 +40,7 @@ Orchestrator parses flags from `$ARGUMENTS`:
 
 - Extract `--reviewer <user>` if present
 - Extract `--dry-run` if present
+- Extract `--include-bots` if present
 - Remaining argument is PR number/URL (or empty for auto-detect)
 
 Then gather metadata:
@@ -97,7 +98,7 @@ Spawn a **comment-classifier** sub-agent:
      - `commentType` for these is `"review_body"`; they have no `path`/`line`
   3. Fetch issue comments: `gh api repos/{owner}/{repo}/issues/{prNumber}/comments --paginate`
   4. Skip resolved threads (`isResolved == true`) — classify as **resolved**
-  5. Skip bot comments (author `type == "Bot"` or login ending in `[bot]`)
+  5. Unless `--include-bots` is set, skip bot comments (author `type == "Bot"` or login ending in `[bot]`)
   6. Skip PR author self-comments (author login == PR author login)
   7. Apply `--reviewer` filter if set (only keep comments from that user)
   8. Group threaded comments via `replyTo` / `in_reply_to_id` — classify root only, replies are context

@@ -24,3 +24,4 @@ plugins/
 cache/
 __pycache__/
 sessions/
+tasks/
