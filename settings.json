@@ -7,7 +7,8 @@
     "playwright@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "plannotator@plannotator": true
+    "plannotator@plannotator": true,
+    "figma@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
