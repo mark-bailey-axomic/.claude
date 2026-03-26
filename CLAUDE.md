@@ -1,6 +1,7 @@
 # CLAUDE.md
 
 - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
+- **Always delegate work to subagents** unless the task is trivially simple (e.g., a single file read, quick answer, small edit). For anything multi-step, research-heavy, or involving implementation, spawn agents to do the work. Prefer parallel agents when tasks are independent.
 
 ## Always Do First
 
@@ -27,7 +28,15 @@
 
 ## Atlassian
 
-- Your primary method for interacting with Atlassian should be the Atlassian CLI (acli).
+- Primary: Atlassian CLI (acli)
+- Secondary: Atlassian MCP server
+- Tertiary: Direct API calls (creds available in .env: ATLASSIAN_CLOUD_ID, ATLASSIAN_EMAIL, ATLASSIAN_OAUTH_CLIENT_ID, ATLASSIAN_OAUTH_CLIENT_SECRET)
+
+## Worktrees
+
+- In worktrees, always use `npm ci` not `npm install` (prevents lockfile rewrite).
+- Run `git checkout -- .` after install to reset formatting drift.
+- Never commit `package-lock.json` changes unless intentional.
 
 ## Figma
 
