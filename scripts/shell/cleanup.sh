@@ -92,7 +92,7 @@ purge_file() {
 }
 
 clean_worktrees() {
-  local wt_dir="${CLAUDE_DIR}/worktrees"
+  local wt_dir="${WORKTREES_DIR:-${CLAUDE_DIR}/worktrees}"
   if [[ ! -d "$wt_dir" ]]; then return; fi
 
   echo ""
