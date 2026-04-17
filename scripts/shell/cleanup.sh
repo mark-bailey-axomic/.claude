@@ -73,6 +73,7 @@ purge_dir() {
   if ! $DRY_RUN; then
     rm -rf "${dir:?}"/*
     find "$dir" -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} + 2>/dev/null || true
+    rmdir "$dir" 2>/dev/null || true
   fi
 }
 
@@ -239,7 +240,6 @@ echo ""
 echo "Ephemeral files:"
 purge_file "${CLAUDE_DIR}/firebase-debug.log"        "firebase-debug.log"
 purge_file "${CLAUDE_DIR}/mcp-needs-auth-cache.json"  "mcp-needs-auth-cache.json"
-purge_file "${CLAUDE_DIR}/policy-limits.json"         "policy-limits.json"
 purge_file "${CLAUDE_DIR}/stats-cache.json"           "stats-cache.json"
 
 if $INCLUDE_HISTORY; then
