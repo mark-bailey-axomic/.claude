@@ -1,4 +1,4 @@
-.PHONY: restore-plugins clean clean-dry-run
+.PHONY: restore-plugins
 
 restore-plugins:
 	@echo "Restoring plugins..."

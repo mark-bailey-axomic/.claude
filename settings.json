@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["Bash(gh pr:*)", "Bash(tmux:*)", "Bash(tmux split-window:*)"],
+    "allow": ["Bash(gh pr:*)", "Bash(gh repo:*)", "Bash(tmux:*)", "Bash(tmux split-window:*)", "Bash(grep:*)", "Bash(jq:*)"],
     "deny": ["Read(node_modules/**)", "Read(dist/**)", "Read(.next/**)", "Read(coverage/**)", "Read(*.lock)"],
     "ask": [],
     "defaultMode": "auto"
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "grep -E '^(EMPLOYEE_CODE|WORKTREES_DIR|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' \"$HOME/.claude/.env\" 2>/dev/null | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Environment variables from ~/.claude/.env:\\n\" + .)}}'"
+            "command": "command -v jq >/dev/null 2>&1 && grep -E '^(EMPLOYEE_CODE|WORKTREES_DIR|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' \"$HOME/.claude/.env\" 2>/dev/null | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Environment variables from ~/.claude/.env:\\n\" + .)}}'"
           }
         ]
       }
