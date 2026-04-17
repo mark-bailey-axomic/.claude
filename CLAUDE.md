@@ -12,3 +12,14 @@ You are an **orchestrator**, not an implementer. Your primary role is to decompo
 ## Style
 
 - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
+
+## See rules/
+
+- `branch-naming.md` — branch format
+- `worktrees.md` — worktree usage
+- `commits.md` — commit format + safety
+- `pull-requests.md` — PR creation
+- `code-review.md` — review prereqs
+- `tdd.md` — test-driven development
+- `frontend-design.md` — frontend skill required
+- `surgical-changes.md` — change scope
