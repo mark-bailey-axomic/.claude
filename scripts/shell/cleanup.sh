@@ -67,7 +67,12 @@ purge_dir() {
   if [[ ! -d "$dir" ]]; then return; fi
   local size
   size=$(dir_size_bytes "$dir")
-  if (( size == 0 )); then return; fi
+  if (( size == 0 )); then
+    if ! $DRY_RUN; then
+      rmdir "$dir" 2>/dev/null || true
+    fi
+    return
+  fi
   TOTAL_FREED=$((TOTAL_FREED + size))
   echo "  $(action_label) $label: $(human_size "$size")"
   if ! $DRY_RUN; then
