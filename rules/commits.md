@@ -2,7 +2,7 @@
 
 Format: `{TICKET-ID}: {concise description}`
 
-- For feedback addresses: `address feedback: {concise summary}`
+- For addressing feedback: `address feedback: {concise summary}`
 
 ## Branch Safety
 
