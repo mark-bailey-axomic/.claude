@@ -4,6 +4,11 @@ Format: `{TICKET-ID}: {concise description}`
 
 - For feedback addresses: `address feedback: {concise summary}`
 
+## Branch Safety
+
+- **NEVER** commit unless current branch starts with `{EMPLOYEE_CODE}_` or `claude_` (EMPLOYEE_CODE injected at session start)
+- Always run `git rev-parse --abbrev-ref HEAD` and verify before committing
+
 ## Staging
 
 - **Explicit per-file only**: `git add <file1> <file2>`

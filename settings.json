@@ -33,6 +33,18 @@
   "env": {
     "BASH_MAX_OUTPUT_LENGTH": "150000"
   },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -E '^(EMPLOYEE_CODE|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' /Users/markbailey/.claude/.env 2>/dev/null | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Environment variables from ~/.claude/.env:\\n\" + .)}}'"
+          }
+        ]
+      }
+    ]
+  },
   "effortLevel": "max",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true
