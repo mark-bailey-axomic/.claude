@@ -140,7 +140,7 @@ The orchestrator handles this directly.
 7. Create a git worktree for the new branch (this checks it out in the worktree, not the current working directory):
 
    ```bash
-   git worktree add ~/.claude/worktrees/${REPO_NAME}/{branch-name} {branch-name}
+   git worktree add ${WORKTREES_DIR}/${REPO_NAME}/{branch-name} {branch-name}
    ```
 
 8. Store worktree path — all subsequent sub-agents operate within it. The orchestrator's original branch remains checked out.
@@ -356,7 +356,7 @@ If `pass: true` → proceed to Stage 11
 1. If any post-PR commits occurred (review fixes or verification gaps):
    - Invoke `/pr` skill with args: `--update --jira {TICKET-ID} --ai-assisted`
 2. Clean up worktree:
-   - Remove the worktree: `git worktree remove ~/.claude/worktrees/${REPO_NAME}/{branch-name}`
+   - Remove the worktree: `git worktree remove ${WORKTREES_DIR}/${REPO_NAME}/{branch-name}`
    - Delete the local branch if fully merged: `git branch -d {branch-name}`
 3. Output a concise summary:
 

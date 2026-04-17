@@ -67,12 +67,18 @@ purge_dir() {
   if [[ ! -d "$dir" ]]; then return; fi
   local size
   size=$(dir_size_bytes "$dir")
-  if (( size == 0 )); then return; fi
+  if (( size == 0 )); then
+    if ! $DRY_RUN; then
+      rmdir "$dir" 2>/dev/null || true
+    fi
+    return
+  fi
   TOTAL_FREED=$((TOTAL_FREED + size))
   echo "  $(action_label) $label: $(human_size "$size")"
   if ! $DRY_RUN; then
     rm -rf "${dir:?}"/*
     find "$dir" -mindepth 1 -maxdepth 1 -name '.*' -exec rm -rf {} + 2>/dev/null || true
+    rmdir "$dir" 2>/dev/null || true
   fi
 }
 
@@ -91,7 +97,7 @@ purge_file() {
 }
 
 clean_worktrees() {
-  local wt_dir="${CLAUDE_DIR}/worktrees"
+  local wt_dir="${WORKTREES_DIR:-${CLAUDE_DIR}/worktrees}"
   if [[ ! -d "$wt_dir" ]]; then return; fi
 
   echo ""
@@ -239,7 +245,6 @@ echo ""
 echo "Ephemeral files:"
 purge_file "${CLAUDE_DIR}/firebase-debug.log"        "firebase-debug.log"
 purge_file "${CLAUDE_DIR}/mcp-needs-auth-cache.json"  "mcp-needs-auth-cache.json"
-purge_file "${CLAUDE_DIR}/policy-limits.json"         "policy-limits.json"
 purge_file "${CLAUDE_DIR}/stats-cache.json"           "stats-cache.json"
 
 if $INCLUDE_HISTORY; then
