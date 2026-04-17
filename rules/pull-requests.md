@@ -4,7 +4,7 @@
 
 - Always create as **draft** (`--draft`)
 - Always assign to self (`--assignee @me`)
-- Title format with Jira: `[PROJ-123] - Short description` (description under 70 chars)
+- Title format with Jira: `[PROJ-123] - Short description` (PR title under 70 chars)
 - Title format without Jira: `Short description`
 - Smart base branch detection order:
   1. If updating existing PR: use PR's `baseRefName`
