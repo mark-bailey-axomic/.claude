@@ -6,7 +6,7 @@ Format: `{TICKET-ID}: {concise description}`
 
 ## Branch Safety
 
-- **NEVER** commit unless current branch starts with `{EMPLOYEE_CODE}_` or `claude_` (EMPLOYEE_CODE injected at session start)
+- **NEVER** commit unless current branch starts with `{EMPLOYEE_CODE}_` or `claude_`
 - Always run `git rev-parse --abbrev-ref HEAD` and verify before committing
 
 ## Staging
