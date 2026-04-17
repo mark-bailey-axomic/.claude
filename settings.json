@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "grep -E '^(EMPLOYEE_CODE|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' /Users/markbailey/.claude/.env 2>/dev/null | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Environment variables from ~/.claude/.env:\\n\" + .)}}'"
+            "command": "grep -E '^(EMPLOYEE_CODE|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' \"$HOME/.claude/.env\" 2>/dev/null | jq -Rs '{hookSpecificOutput:{hookEventName:\"SessionStart\",additionalContext:(\"Environment variables from ~/.claude/.env:\\n\" + .)}}'"
           }
         ]
       }
