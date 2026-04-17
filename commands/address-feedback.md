@@ -223,7 +223,7 @@ Orchestrator attaches `confluenceContext` (array of `{ pageUrl, pageTitle, relev
 ```bash
 git fetch origin {branchName}
 REPO_NAME=$(gh repo view --json name -q .name)
-git worktree add ${WORKTREES_DIR:-$HOME/.claude/worktrees}/${REPO_NAME}/{branchName} origin/{branchName}
+git worktree add ${WORKTREES_DIR}/${REPO_NAME}/{branchName} origin/{branchName}
 ```
 
 Store worktree path for all subsequent stages.
@@ -376,7 +376,7 @@ Use the `reviewers` list from Stage 2's classification output.
 
 ## Stage 8: Cleanup & Report
 
-- Remove worktree: `git worktree remove ${WORKTREES_DIR:-$HOME/.claude/worktrees}/${REPO_NAME}/{branchName}`
+- Remove worktree: `git worktree remove ${WORKTREES_DIR}/${REPO_NAME}/{branchName}`
 - Output summary:
 
 ```
