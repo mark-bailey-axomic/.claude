@@ -44,7 +44,8 @@
     "plannotator@plannotator": true,
     "figma@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true
+    "feature-dev@claude-plugins-official": true,
+    "atelier@jana-rasakanthan-axomic": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -57,6 +58,12 @@
       "source": {
         "source": "github",
         "repo": "backnotprop/plannotator"
+      }
+    },
+    "jana-rasakanthan-axomic": {
+      "source": {
+        "source": "github",
+        "repo": "axomic/jra-claude-toolkit"
       }
     }
   },
