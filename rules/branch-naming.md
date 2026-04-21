@@ -10,4 +10,4 @@ Format: `{EMPLOYEE_CODE}_{TICKET_ID}_{sanitized-title}_{worktype}`
   - `technical debt` (case-insensitive) → `debt`
   - anything else → `feature`
 
-Example: `mba_PROJ-123_add-user-auth-endpoint_feature`
+Example: `abc_PROJ-123_add-user-auth-endpoint_feature`

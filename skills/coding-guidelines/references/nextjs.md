@@ -32,13 +32,20 @@ You are a senior Next.js engineer with deep experience building production-grade
 // ✅ Good — client boundary is small and low in the tree
 // app/_components/SearchBar.tsx
 'use client';
-export function SearchBar() { /* uses useState */ }
+export function SearchBar() {
+  /* uses useState */
+}
 
 // app/page.tsx (Server Component)
 import { SearchBar } from './_components/SearchBar';
 export default function Page() {
   const data = await getData(); // runs on server
-  return <main><SearchBar /><Results data={data} /></main>;
+  return (
+    <main>
+      <SearchBar />
+      <Results data={data} />
+    </main>
+  );
 }
 ```
 

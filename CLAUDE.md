@@ -23,3 +23,4 @@ You are an **orchestrator**, not an implementer. Your primary role is to decompo
 - `tdd.md` — test-driven development
 - `frontend-design.md` — frontend skill required
 - `surgical-changes.md` — change scope
+- `memory.md` — memory management

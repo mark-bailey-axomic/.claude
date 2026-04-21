@@ -37,6 +37,7 @@ All Tailwind utility classes in JSX **must** be extracted into CSS Module files 
 5. Combine related utilities into as few semantic classes as reasonable
 
 **Before (development):**
+
 ```jsx
 <div className="flex flex-col gap-4 rounded-lg bg-white p-6 shadow-md">
   <h2 className="text-lg font-semibold text-gray-900">Title</h2>
@@ -45,6 +46,7 @@ All Tailwind utility classes in JSX **must** be extracted into CSS Module files 
 ```
 
 **After (production-ready):**
+
 ```css
 /* Card.module.css */
 .card {
@@ -66,7 +68,7 @@ import styles from './Card.module.css';
 <div className={styles.card}>
   <h2 className={styles.title}>Title</h2>
   <p className={styles.description}>Description</p>
-</div>
+</div>;
 ```
 
 ## Configuration
