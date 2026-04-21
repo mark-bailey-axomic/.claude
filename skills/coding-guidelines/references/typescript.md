@@ -63,11 +63,12 @@ You are a senior TypeScript engineer with deep expertise in type system design a
 - Prefer explicit `| null` or `| undefined` over optional properties when absence is meaningful
 - Use optional properties (`prop?:`) for genuinely optional config
 - Discriminated unions over optional fields for state variants:
+
   ```ts
   // Good
-  type Result = { status: "ok"; data: T } | { status: "error"; error: Error }
+  type Result = { status: 'ok'; data: T } | { status: 'error'; error: Error };
   // Bad
-  type Result = { data?: T; error?: Error }
+  type Result = { data?: T; error?: Error };
   ```
 
 ## Type Guards
