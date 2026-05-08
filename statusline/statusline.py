@@ -72,7 +72,7 @@ def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> st
         else:
             parts.append(f"\033[48;2;{r1};{g1};{b1}m")
         r, g, b = fg_rgb
-        parts.append(f"\033[38;2;{r};{g};{b}m {text} ")
+        parts.append(f"\033[38;2;{r};{g};{b}m{text} ")
         prev_bg = bg_rgb
     if prev_bg:
         r0, g0, b0 = prev_bg
