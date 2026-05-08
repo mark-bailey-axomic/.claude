@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Configurable statusline for Claude Code. Reads session JSON from stdin, outputs formatted status bar."""
 import os, sys, json
-from typing import Any #, cast
+from typing import Any
 from utils.color import hex_to_rgb
 from utils.terminal import ANSI_RESET
 
@@ -66,7 +66,7 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[tup
 def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> str:
   color_scheme = config.get("color_scheme", "dark")
   theme = config.get("themes", {}).get(color_scheme, {})
-  result = ""
+  parts: list[str] = []
   prev_bg: tuple[int, int, int] | None = None
   for seg_type, text in pairs:
     colors = theme.get(seg_type, {})
@@ -75,16 +75,16 @@ def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> st
     r1, g1, b1 = bg_rgb
     if prev_bg:
       r0, g0, b0 = prev_bg
-      result += f"\033[38;2;{r0};{g0};{b0}m\033[48;2;{r1};{g1};{b1}m{POWERLINE_SEP}"
+      parts.append(f"\033[38;2;{r0};{g0};{b0}m\033[48;2;{r1};{g1};{b1}m{POWERLINE_SEP}")
     else:
-      result += f"\033[48;2;{r1};{g1};{b1}m"
+      parts.append(f"\033[48;2;{r1};{g1};{b1}m")
     r, g, b = fg_rgb
-    result += f"\033[38;2;{r};{g};{b}m {text} "
+    parts.append(f"\033[38;2;{r};{g};{b}m {text} ")
     prev_bg = bg_rgb
   if prev_bg:
     r0, g0, b0 = prev_bg
-    result += f"{ANSI_RESET}\033[38;2;{r0};{g0};{b0}m{POWERLINE_SEP}{ANSI_RESET}"
-  return result
+    parts.append(f"{ANSI_RESET}\033[38;2;{r0};{g0};{b0}m{POWERLINE_SEP}{ANSI_RESET}")
+  return "".join(parts)
 
 # Main
 def main():

@@ -7,5 +7,5 @@ def main(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
 
     label = "Model: " if show_label else ""
     if not model:
-      return None
+        return None
     return f"{label}{model}"
