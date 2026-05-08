@@ -60,13 +60,13 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[tup
         text = module.main({ **cfg, "color_scheme": color_scheme }, session)
         if text: segments.append((seg_type, text))
       except Exception as e:
-        print(f"SEGMENT ERROR: {e}", file=sys.stderr)
+        print(f"SEGMENT ERROR {seg_type}: {e}", file=sys.stderr)
   return segments
 
 def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> str:
   color_scheme = config.get("color_scheme", "dark")
   theme = config.get("themes", {}).get(color_scheme, {})
-  parts: list[str] = []
+  parts: list[str] = [ANSI_RESET]
   prev_bg: tuple[int, int, int] | None = None
   for seg_type, text in pairs:
     colors = theme.get(seg_type, {})

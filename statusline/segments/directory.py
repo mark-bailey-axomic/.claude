@@ -11,23 +11,23 @@ def parse_git_remote(url: str, separator: str = " ") -> str | None:
   return None
 
 def get_repo(cwd: str, include_at: bool = True) -> str | None:
-    try:
-      process = subprocess.run(
-        REPO_CMD,
-        capture_output=True,
-        text=True,
-        timeout=5,
-        cwd=cwd
-      )
+  try:
+    process = subprocess.run(
+      REPO_CMD,
+      capture_output=True,
+      text=True,
+      timeout=5,
+      cwd=cwd
+    )
 
-      if process.returncode == 0:
-        url = process.stdout.strip()
-        repo = parse_git_remote(url)
-        prefix = "@" if include_at else ""
-        return f"{prefix}{repo}" if repo else None
-      return None
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-      return None
+    if process.returncode == 0:
+      url = process.stdout.strip()
+      repo = parse_git_remote(url)
+      prefix = "@" if include_at else ""
+      return f"{prefix}{repo}" if repo else None
+    return None
+  except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+    return None
 
 # Main
 def main(config: dict[str, str | bool], session: dict | None = None) -> str:

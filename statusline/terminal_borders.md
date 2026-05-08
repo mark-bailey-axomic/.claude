@@ -5,10 +5,10 @@
 Requires Powerline-patched or Nerd Font.
 
 ```python
-RIGHT_ARROW = "\uE0B0"  #
-LEFT_ARROW  = "\uE0B2"  #
-RIGHT_ROUND = "\uE0B4"  #
-LEFT_ROUND  = "\uE0B6"  #
+RIGHT_ARROW = "\uE0B0"
+LEFT_ARROW  = "\uE0B2"
+RIGHT_ROUND = "\uE0B4"
+LEFT_ROUND  = "\uE0B6"
 
 def fg(color): return f"\033[38;2;{color}m"
 def bg(color): return f"\033[48;2;{color}m"

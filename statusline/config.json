@@ -23,14 +23,12 @@
     },
     {
       "type": "ai_model",
-      "show_icon": false,
       "show_label": true,
       "enabled": true
     },
     {
       "type": "usage_context",
       "display": ["percentage", "tokens", "cost"],
-      "show_icon": false,
       "enabled": true
     }
   ]

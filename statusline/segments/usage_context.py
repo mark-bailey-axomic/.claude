@@ -30,7 +30,7 @@ def main(config: dict[str, Any], session: dict[str, Any]) -> str | None:
     # Build the segment text based on the display settings
     segment_parts: list[str] = []
     for item in display:
-        if item == "percentage":     
+        if item == "percentage":
             # Extract usage context information from the session
             context_window = session.get('context_window', {})
             used_percentage: int = context_window.get('used_percentage', 0) or 0
