@@ -33,10 +33,10 @@ def round_pill(text, fg_color="255;255;255", bg_color="60;60;60"):
     )
 ```
 
-Output:
+Output (Nerd Fonts terminal):
 ```
- main   Python 3.11
- main   Python 3.11
+ main   Python 3.11 
+ main   Python 3.11 
 ```
 
 ## 2. Terminal Block Characters
