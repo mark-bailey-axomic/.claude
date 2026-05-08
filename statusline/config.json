@@ -23,7 +23,6 @@
     },
     {
       "type": "ai_model",
-      "show_label": true,
       "enabled": true
     },
     {
