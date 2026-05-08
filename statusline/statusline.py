@@ -42,6 +42,7 @@ def build_segments(config: dict[str, Any], session: dict[str, Any]) -> list[tupl
     segments: list[tuple[str, str]] = []
     available_segments = load_segments()
     for cfg in config.get("segments") or []:
+        if not isinstance(cfg, dict): continue
         if not cfg.get("enabled", False): continue
         seg_type = cfg.get("type")
         module = available_segments.get(seg_type)

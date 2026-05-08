@@ -1,6 +1,7 @@
-from typing import Any, cast
+from typing import Any
 
 def make_progress_bar(pct: int, width: int = 10) -> str:
+    pct = max(0, min(100, pct))
     filled = int(width * pct / 100)
     bar = "█" * filled + "░" * (width - filled)
     return f"[{bar} {pct}]"
@@ -23,7 +24,7 @@ def get_token_usage(session: dict[str, Any]) -> str:
 
 # Main
 def main(config: dict[str, Any], session: dict[str, Any]) -> str | None:
-    display = cast(list[str], config.get("display", []))
+    display = config.get("display") or []
 
     # Build the segment text based on the display settings
     segment_parts: list[str] = []
