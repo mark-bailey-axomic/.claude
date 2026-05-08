@@ -5,7 +5,7 @@ def make_progress_bar(pct: int, width: int = 10) -> str:
     bar = "█" * filled + "░" * (width - filled)
     return f"[{bar} {pct}]"
 
-# Token Methods
+# Token Methods
 def format_tokens(tokens: int) -> str:
     if tokens >= 1_000_000:
         return f"{tokens / 1_000_000:.0f}M"
