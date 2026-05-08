@@ -10,9 +10,8 @@ def parse_git_remote(url: str, separator: str = " ") -> str | None:
     return match.group(2).replace('/', separator)
   return None
 
-def get_repo(include_at: bool = True) -> str | None:
+def get_repo(cwd: str, include_at: bool = True) -> str | None:
     try:
-      cwd = os.getcwd()
       process = subprocess.run(
         REPO_CMD,
         capture_output=True,
@@ -31,16 +30,16 @@ def get_repo(include_at: bool = True) -> str | None:
       return None
 
 # Main
-def main(config: dict[str, str | bool], _) -> str:
+def main(config: dict[str, str | bool], session: dict | None = None) -> str:
   show_icon = bool(config.get("show_icon", False))
   show_label = bool(config.get("show_label", False))
-  repo = get_repo()
+  cwd = (session or {}).get("cwd") or os.getcwd()
+  repo = get_repo(cwd)
 
   if repo:
     icon = f"{ICON['repo']} " if show_icon else ""
     return f"{icon}{repo}"
-  
-  cwd = os.getcwd()
+
   dir_name = os.path.basename(cwd)
   icon = f"{ICON['folder']} " if show_icon else ""
   label = "CWD: " if show_label else ""

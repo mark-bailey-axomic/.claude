@@ -2,7 +2,7 @@
 """Configurable statusline for Claude Code. Reads session JSON from stdin, outputs formatted status bar."""
 import os, sys, json
 from typing import Any #, cast
-from utils.color import hex2Rgb
+from utils.color import hex_to_rgb
 from utils.terminal import ANSI_RESET
 
 POWERLINE_SEP = "\ue0b0"  # Nerd Fonts solid right arrow
@@ -60,9 +60,7 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[tup
         text = module.main({ **cfg, "color_scheme": color_scheme }, session)
         if text: segments.append((seg_type, text))
       except Exception as e:
-        # Handle exceptions gracefully (e.g., log them, skip the segment, etc.)
-        import sys; print(f"SEGMENT ERROR: {e}", file=sys.stderr)
-        pass
+        print(f"SEGMENT ERROR: {e}", file=sys.stderr)
   return segments
 
 def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> str:
@@ -72,8 +70,8 @@ def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> st
   prev_bg: tuple[int, int, int] | None = None
   for seg_type, text in pairs:
     colors = theme.get(seg_type, {})
-    fg_rgb = hex2Rgb(colors.get("fg", "#ffffff")) or (255, 255, 255)
-    bg_rgb = hex2Rgb(colors.get("bg", "#000000")) or (0, 0, 0)
+    fg_rgb = hex_to_rgb(colors.get("fg", "#ffffff")) or (255, 255, 255)
+    bg_rgb = hex_to_rgb(colors.get("bg", "#000000")) or (0, 0, 0)
     r1, g1, b1 = bg_rgb
     if prev_bg:
       r0, g0, b0 = prev_bg
@@ -108,9 +106,9 @@ def main():
   # Render final statusline
   display_as = config.get("display_as", "plain")
   if display_as == "powerline":
-      output = render_powerline(pairs, config)
+    output = render_powerline(pairs, config)
   else:
-      output = " ".join(text for _, text in pairs)
+    output = " ".join(text for _, text in pairs)
   sys.stdout.write(f"{output}\n")
   sys.stdout.flush()
 

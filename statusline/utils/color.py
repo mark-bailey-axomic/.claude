@@ -1,5 +1,5 @@
 
-def hex2Rgb(hex_str: str) -> tuple[int, int, int] | None:
+def hex_to_rgb(hex_str: str) -> tuple[int, int, int] | None:
   try:
     if (hex_str.startswith("#")):
       if len(hex_str) == 4:
