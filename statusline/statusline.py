@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Configurable statusline for Claude Code. Reads session JSON from stdin, outputs formatted status bar."""
-#loveit
 import os, sys, json
 from typing import Any #, cast
+from utils.color import hex2Rgb
+from utils.terminal import ANSI_RESET
 
-POWERLINE_SEP = "\ue0b0"  # Nerd Fonts solid right arrow 
+POWERLINE_SEP = "\ue0b0"  # Nerd Fonts solid right arrow
 
 def load_config() -> dict[str, Any]:
   # Load user config
@@ -50,14 +51,14 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[tup
 
   for cfg in config.get("segments", []):
     if not cfg.get("enabled", False): continue
-    type = cfg.get("type")
-    module = available_segments.get(type)
+    seg_type = cfg.get("type")
+    module = available_segments.get(seg_type)
 
     if module and hasattr(module, "main"):
       try:
         color_scheme = config.get("color_scheme", "dark")
         text = module.main({ **cfg, "color_scheme": color_scheme }, session)
-        if text: segments.append((type, text))
+        if text: segments.append((seg_type, text))
       except Exception as e:
         # Handle exceptions gracefully (e.g., log them, skip the segment, etc.)
         import sys; print(f"SEGMENT ERROR: {e}", file=sys.stderr)
@@ -65,29 +66,27 @@ def build_segments(config:  dict[str, Any], session: dict[str, Any]) -> list[tup
   return segments
 
 def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> str:
-    from utils.color import hex2Rgb
-    from utils.terminal import ANSI_RESET
-    color_scheme = config.get("color_scheme", "dark")
-    theme = config.get("themes", {}).get(color_scheme, {})
-    result = ""
-    prev_bg: tuple[int, int, int] | None = None
-    for seg_type, text in pairs:
-        colors = theme.get(seg_type, {})
-        fg_rgb = hex2Rgb(colors.get("fg", "#ffffff")) or (255, 255, 255)
-        bg_rgb = hex2Rgb(colors.get("bg", "#000000")) or (0, 0, 0)
-        r1, g1, b1 = bg_rgb
-        if prev_bg:
-            r0, g0, b0 = prev_bg
-            result += f"\033[38;2;{r0};{g0};{b0}m\033[48;2;{r1};{g1};{b1}m{POWERLINE_SEP}"
-        else:
-            result += f"\033[48;2;{r1};{g1};{b1}m"
-        r, g, b = fg_rgb
-        result += f"\033[38;2;{r};{g};{b}m {text} "
-        prev_bg = bg_rgb
+  color_scheme = config.get("color_scheme", "dark")
+  theme = config.get("themes", {}).get(color_scheme, {})
+  result = ""
+  prev_bg: tuple[int, int, int] | None = None
+  for seg_type, text in pairs:
+    colors = theme.get(seg_type, {})
+    fg_rgb = hex2Rgb(colors.get("fg", "#ffffff")) or (255, 255, 255)
+    bg_rgb = hex2Rgb(colors.get("bg", "#000000")) or (0, 0, 0)
+    r1, g1, b1 = bg_rgb
     if prev_bg:
-        r0, g0, b0 = prev_bg
-        result += f"{ANSI_RESET}\033[38;2;{r0};{g0};{b0}m{POWERLINE_SEP}{ANSI_RESET}"
-    return result
+      r0, g0, b0 = prev_bg
+      result += f"\033[38;2;{r0};{g0};{b0}m\033[48;2;{r1};{g1};{b1}m{POWERLINE_SEP}"
+    else:
+      result += f"\033[48;2;{r1};{g1};{b1}m"
+    r, g, b = fg_rgb
+    result += f"\033[38;2;{r};{g};{b}m {text} "
+    prev_bg = bg_rgb
+  if prev_bg:
+    r0, g0, b0 = prev_bg
+    result += f"{ANSI_RESET}\033[38;2;{r0};{g0};{b0}m{POWERLINE_SEP}{ANSI_RESET}"
+  return result
 
 # Main
 def main():
