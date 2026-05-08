@@ -2,10 +2,10 @@ import os, re, subprocess
 # from typing import cast
 # from helpers import colorize
 
-REPO_CMD = "git remote get-url origin"
+REPO_CMD = ["git", "remote", "get-url", "origin"]
 ICON = dict(folder="📁", repo="🐙")
 
-# Github Repo Methods
+# GitHub Repo Methods
 def parse_git_remote(url: str, separator: str = " ") -> str | None:
   match = re.match(r"(https?://[^/]+/|git@[^:]+:)(.+?)(?:\.git)?$", url)
   if match:
@@ -16,11 +16,10 @@ def get_repo(include_at: bool = True) -> str | None:
     try:
       cwd = os.getcwd()
       process = subprocess.run(
-        REPO_CMD, 
-        capture_output=True, 
-        text=True, 
-        shell=True, 
-        timeout=5, 
+        REPO_CMD,
+        capture_output=True,
+        text=True,
+        timeout=5,
         cwd=cwd
       )
 

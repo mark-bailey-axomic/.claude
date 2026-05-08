@@ -1,16 +1,15 @@
 import os, subprocess
 
-BRANCH_CMD = "git branch --show-current"
+BRANCH_CMD = ["git", "branch", "--show-current"]
 
 def get_branch() -> str | None:
   try:
     cwd = os.getcwd()
     process = subprocess.run(
-      BRANCH_CMD, 
-      capture_output=True, 
-      text=True, 
-      shell=True, 
-      timeout=5, 
+      BRANCH_CMD,
+      capture_output=True,
+      text=True,
+      timeout=5,
       cwd=cwd
     )
 

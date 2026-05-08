@@ -5,11 +5,13 @@ ANSI_RESET_FG = "\033[39m"
 ANSI_RESET_BG = "\033[49m"
 ANSI_REVERSE = "\033[7m"
 ANSI_BOLD = "\033[1m"
+ANSI_RESET_BOLD = "\033[22m"
 
 def paint_fg(text: str, rgb: tuple[int, int, int], is_bold: bool = False) -> str:
     r, g, b = rgb
     bold = ANSI_BOLD if is_bold else ""
-    return f"\033[38;2;{r};{g};{b}m{bold}{text}{ANSI_RESET_FG}"
+    bold_reset = ANSI_RESET_BOLD if is_bold else ""
+    return f"\033[38;2;{r};{g};{b}m{bold}{text}{bold_reset}{ANSI_RESET_FG}"
 
 def paint_bg(text: str, rgb: tuple[int, int, int]) -> str:
     r, g, b = rgb
