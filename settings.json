@@ -1,12 +1,76 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "BASH_MAX_OUTPUT_LENGTH": "150000"
+  },
   "permissions": {
-    "defaultMode": "plan"
+    "allow": [
+      "Bash(gh pr:*)",
+      "Bash(gh repo:*)",
+      "Bash(tmux:*)",
+      "Bash(tmux split-window:*)",
+      "Bash(grep:*)",
+      "Bash(jq:*)"
+    ],
+    "deny": [
+      "Read(node_modules/**)",
+      "Read(dist/**)",
+      "Read(.next/**)",
+      "Read(coverage/**)",
+      "Read(*.lock)"
+    ],
+    "ask": [],
+    "defaultMode": "auto"
   },
   "statusLine": {
     "type": "command",
     "command": "python ~/.claude/statusline/statusline.py"
   },
-  "autoUpdatesChannel": "latest",
-  "skipDangerousModePermissionPrompt": true
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$CLAUDE_ENV_FILE\" ] && grep -E '^(EMPLOYEE_CODE|WORKTREES_DIR|ATLASSIAN_EMAIL|ATLASSIAN_CLOUD_ID)=' \"$HOME/.claude/.env\" 2>/dev/null | sed 's/^/export /' >> \"$CLAUDE_ENV_FILE\""
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "firebase@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "plannotator@plannotator": true,
+    "figma@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "atelier@jana-rasakanthan-axomic": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "plannotator": {
+      "source": {
+        "source": "github",
+        "repo": "backnotprop/plannotator"
+      }
+    },
+    "jana-rasakanthan-axomic": {
+      "source": {
+        "source": "github",
+        "repo": "axomic/jra-claude-toolkit"
+      }
+    }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }

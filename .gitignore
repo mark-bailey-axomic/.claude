@@ -3,10 +3,12 @@
 history.jsonl
 stats-cache.json
 mcp-needs-auth-cache.json
+firebase-debug.log
 .env
 
 backups/
 __backups__/
+paste-cache/
 plans/
 logs/
 session-env/
@@ -21,3 +23,5 @@ telemetry/
 plugins/
 cache/
 __pycache__/
+sessions/
+tasks/
