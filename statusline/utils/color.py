@@ -1,5 +1,7 @@
 
-def hex_to_rgb(hex_str: str) -> tuple[int, int, int] | None:
+def hex_to_rgb(hex_str: str | None) -> tuple[int, int, int] | None:
+    if not isinstance(hex_str, str):
+        return None
     try:
         if hex_str.startswith("#"):
             if len(hex_str) == 4:
