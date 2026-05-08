@@ -16,12 +16,10 @@ def format_tokens(tokens: int) -> str:
 
 def get_token_usage(session: dict[str, Any]) -> str:
     context_window = session.get('context_window', {})
-    total_input_tokens: int = context_window.get('total_input_tokens', 0)
-    total_output_tokens: int = context_window.get('total_output_tokens', 0)
-    token_limit: int = context_window.get('context_window_size', 0)
-    total_tokens = total_input_tokens + total_output_tokens
-
-    return f"{format_tokens(total_tokens)}/{format_tokens(token_limit)}"
+    token_limit: int = context_window.get('context_window_size', 0) or 0
+    used_pct: float = context_window.get('used_percentage', 0) or 0
+    used_tokens = round(used_pct / 100 * token_limit)
+    return f"{format_tokens(used_tokens)}/{format_tokens(token_limit)}"
 
 # Main
 def main(config: dict[str, Any], session: dict[str, Any]) -> str | None:
