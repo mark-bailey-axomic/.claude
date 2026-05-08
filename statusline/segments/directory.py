@@ -37,7 +37,7 @@ def main(config: dict[str, str | bool], session: dict | None = None) -> str:
     if repo:
         icon = f"{ICON['repo']} " if show_icon else ""
         return f"{icon}{repo}"
-    dir_name = os.path.basename(cwd)
+    dir_name = os.path.basename(cwd) or "/"
     icon = f"{ICON['folder']} " if show_icon else ""
     label = "CWD: " if show_label else ""
     return f"{label}{icon}{dir_name}"

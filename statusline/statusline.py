@@ -15,7 +15,7 @@ def load_config() -> dict[str, Any]:
         CONFIG_PATH = os.path.join(file_dir, "config.json")
         with open(CONFIG_PATH, "r", encoding="utf-8") as f:
             config = dict(json.loads(f.read()))
-    except (FileNotFoundError, json.JSONDecodeError):
+    except (FileNotFoundError, json.JSONDecodeError, TypeError, ValueError):
         pass
     return config
 
@@ -41,7 +41,7 @@ def load_segments() -> dict[str, Any]:
 def build_segments(config: dict[str, Any], session: dict[str, Any]) -> list[tuple[str, str]]:
     segments: list[tuple[str, str]] = []
     available_segments = load_segments()
-    for cfg in config.get("segments", []):
+    for cfg in config.get("segments") or []:
         if not cfg.get("enabled", False): continue
         seg_type = cfg.get("type")
         module = available_segments.get(seg_type)
