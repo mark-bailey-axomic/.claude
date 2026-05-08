@@ -1,6 +1,4 @@
 import os, re, subprocess
-# from typing import cast
-# from helpers import colorize
 
 REPO_CMD = ["git", "remote", "get-url", "origin"]
 ICON = dict(folder="📁", repo="🐙")

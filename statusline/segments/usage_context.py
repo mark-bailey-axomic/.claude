@@ -24,7 +24,7 @@ def get_token_usage(session: dict[str, Any]) -> str:
     return f"{format_tokens(total_tokens)}/{format_tokens(token_limit)}"
 
 # Main
-def main(config: dict[str, str | bool], session: dict[str, Any]) -> str | None:
+def main(config: dict[str, Any], session: dict[str, Any]) -> str | None:
     # show_icon = bool(config.get("show_icon", False))
     display = cast(list[str], config.get("display", []))
 
