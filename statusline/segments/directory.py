@@ -48,18 +48,3 @@ def main(config: dict[str, str | bool], _) -> str:
   icon = f"{ICON['folder']} " if show_icon else ""
   label = "CWD: " if show_label else ""
   return f"{label}{icon}{dir_name}"
-
-# def hyperlink(url: str, text: str) -> str:
-#     return f"\033]8;;{url}\033\\{text}\033]8;;\033\\"
-
-# def get_color(color_scheme: str, style: str, is_repo: bool = False) -> dict[str, str | None]:
-#   IS_DARK = color_scheme == "dark"
-
-#   if style == "powerline":
-#     fg = "#ffffff" if IS_DARK else "#1f2328"
-#     bg = "#151b22" if IS_DARK else "#f6f8fa"
-#   else:
-#     fg = "#f6f8fa"
-#     bg = None
-
-#   return { "fg": fg, "bg": bg }

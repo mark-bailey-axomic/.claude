@@ -1,6 +1,14 @@
 {
   "color_scheme": "dark",
   "display_as": "powerline",
+  "themes": {
+    "dark": {
+      "directory":     { "fg": "#7aa2f7", "bg": "#151b22" },
+      "git_branch":    { "fg": "#9ece6a", "bg": "#1a1b26" },
+      "ai_model":      { "fg": "#7dcfff", "bg": "#24283b" },
+      "usage_context": { "fg": "#e0af68", "bg": "#16161e" }
+    }
+  },
   "segments": [
     {
       "type": "directory",

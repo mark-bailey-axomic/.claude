@@ -1,20 +1,6 @@
 import os, subprocess
-# from typing import cast
-# from helpers import colorize
 
 BRANCH_CMD = "git branch --show-current"
-
-# def get_color(color_scheme: str, style: str) -> dict[str, str | None]:
-#   IS_DARK = color_scheme == "dark"
-
-#   if style == "powerline":
-#     fg = "#4493f8" if IS_DARK else "#0969da"
-#     bg = "#112034" if IS_DARK else "#ddf4ff"
-#   else:
-#     fg = "#4493f8" if IS_DARK else "#0969da"
-#     bg = None
-
-#   return dict(fg=fg, bg=bg)
 
 def get_branch() -> str | None:
   try:
