@@ -4,7 +4,7 @@
 import os, sys, json
 from typing import Any #, cast
 
-POWERLINE_SEP = ""  # Nerd Fonts solid right arrow
+POWERLINE_SEP = "\ue0b0"  # Nerd Fonts solid right arrow 
 
 def load_config() -> dict[str, Any]:
   # Load user config
