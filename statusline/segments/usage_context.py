@@ -25,6 +25,7 @@ def get_token_usage(session: dict[str, Any]) -> str:
 # Main
 def main(config: dict[str, Any], session: dict[str, Any]) -> str | None:
     display = config.get("display") or []
+    if not isinstance(display, list): display = []
 
     # Build the segment text based on the display settings
     segment_parts: list[str] = []

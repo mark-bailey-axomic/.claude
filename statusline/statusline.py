@@ -59,11 +59,15 @@ def render_powerline(pairs: list[tuple[str, str]], config: dict[str, Any]) -> st
     if not pairs:
         return ""
     color_scheme = config.get("color_scheme", "dark")
-    theme = config.get("themes", {}).get(color_scheme, {})
+    themes = config.get("themes") or {}
+    if not isinstance(themes, dict): themes = {}
+    theme = themes.get(color_scheme) or {}
+    if not isinstance(theme, dict): theme = {}
     parts: list[str] = [ANSI_RESET]
     prev_bg: tuple[int, int, int] | None = None
     for seg_type, text in pairs:
-        colors = theme.get(seg_type, {})
+        colors = theme.get(seg_type) or {}
+        if not isinstance(colors, dict): colors = {}
         fg_rgb = hex_to_rgb(colors.get("fg", "#ffffff")) or (255, 255, 255)
         bg_rgb = hex_to_rgb(colors.get("bg", "#000000")) or (0, 0, 0)
         r1, g1, b1 = bg_rgb
