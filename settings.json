@@ -22,6 +22,10 @@
     "ask": [],
     "defaultMode": "auto"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 ~/.claude/statusline/statusline.py"
+  },
   "hooks": {
     "SessionStart": [
       {

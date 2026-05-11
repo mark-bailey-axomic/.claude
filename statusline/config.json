@@ -1,0 +1,34 @@
+{
+  "color_scheme": "dark",
+  "display_as": "powerline",
+  "themes": {
+    "dark": {
+      "directory":     { "fg": "#7aa2f7", "bg": "#151b22" },
+      "git_branch":    { "fg": "#9ece6a", "bg": "#1a1b26" },
+      "ai_model":      { "fg": "#7dcfff", "bg": "#24283b" },
+      "usage_context": { "fg": "#e0af68", "bg": "#16161e" }
+    }
+  },
+  "segments": [
+    {
+      "type": "directory",
+      "show_icon": false,
+      "show_label": true,
+      "enabled": true
+    },
+    {
+      "type": "git_branch",
+      "show_icon": false,
+      "enabled": true
+    },
+    {
+      "type": "ai_model",
+      "enabled": true
+    },
+    {
+      "type": "usage_context",
+      "display": ["percentage", "tokens", "cost"],
+      "enabled": true
+    }
+  ]
+}
