@@ -34,7 +34,7 @@ def load_segments() -> dict[str, Any]:
                         f"segments.{segment_name}",
                         fromlist=["main"]
                     )
-                except ImportError as e:
+                except Exception as e:
                     print(f"SEGMENT IMPORT ERROR: {segment_name}: {e}", file=sys.stderr)
     return segments
 
