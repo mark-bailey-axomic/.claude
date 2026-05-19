@@ -45,6 +45,7 @@ Read and follow: <https://github.com/airbnb/javascript/tree/master/react>
   - One effect per concern
   - Clean up subscriptions/timers in the return function
   - Avoid object/array deps (use primitives or memoize)
+  - Never use `useEffect` to set state — derive during render, compute in event handlers, initialize via `useState(() => ...)`, lift state up, or use `key` to reset. Covers mount, update, and sync-to-props cases. Effects that set state cause double renders and stale UI. For async data, prefer query libraries (Apollo, React Query); for external subscriptions, prefer `useSyncExternalStore`
 - `useRef`: for DOM refs and mutable values that don't trigger re-renders
 
 ## Memoization
@@ -92,6 +93,5 @@ Read and follow: <https://github.com/airbnb/javascript/tree/master/react>
 
 - Prop drilling beyond 2 levels — use context or composition
 - God components that do everything
-- useEffect for derived state — compute during render instead
 - Syncing state between components — lift to common parent
 - String refs or `findDOMNode`
