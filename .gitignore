@@ -25,3 +25,8 @@ cache/
 __pycache__/
 sessions/
 tasks/
+.last-cleanup
+
+remote-settings.json
+settings.local.json
+policy-limits.json
