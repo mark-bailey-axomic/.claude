@@ -1,7 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
-    "BASH_MAX_OUTPUT_LENGTH": "150000"
+    "BASH_MAX_OUTPUT_LENGTH": "150000",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "https://otel-collector.openasset-internal.com:4317",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
+    "OTEL_LOGS_EXPORTER": "otlp",
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_METRIC_EXPORT_INTERVAL": "60000"
+  },
+  "attribution": {
+    "commit": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>",
+    "pr": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
   },
   "permissions": {
     "allow": [
@@ -22,10 +32,6 @@
     "ask": [],
     "defaultMode": "auto"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "python3 ~/.claude/statusline/statusline.py"
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -38,6 +44,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 ~/.claude/statusline/statusline.py"
+  },
   "enabledPlugins": {
     "firebase@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
@@ -45,11 +55,9 @@
     "playwright@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "plannotator@plannotator": true,
-    "figma@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "atelier@jana-rasakanthan-axomic": true
+    "atelier@jana-rasakanthan-axomic": true,
+    "slack@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -71,6 +79,7 @@
       }
     }
   },
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true
 }
