@@ -13,6 +13,10 @@ You are an **orchestrator**, not an implementer. Your primary role is to decompo
 
 - In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
 
+## Attribution
+
+Read `~/.claude/settings.json` `attribution.commit` and `attribution.pr` at session start. Apply them verbatim — `attribution.commit` as the trailer on every commit message; `attribution.pr` at the end of every PR description body. Never bake an attribution literal into a heredoc — always read the setting. If a key is missing or empty, omit the trailer for that target; do not substitute a default.
+
 ## See rules/
 
 - `branch-naming.md` — branch format
