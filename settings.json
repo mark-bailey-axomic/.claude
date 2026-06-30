@@ -9,10 +9,6 @@
     "OTEL_METRICS_EXPORTER": "otlp",
     "OTEL_METRIC_EXPORT_INTERVAL": "60000"
   },
-  "attribution": {
-    "commit": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>",
-    "pr": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
-  },
   "permissions": {
     "allow": [
       "Bash(gh pr:*)",
@@ -53,11 +49,13 @@
     "skill-creator@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "playwright@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "atelier@jana-rasakanthan-axomic": true,
-    "slack@claude-plugins-official": true
+    "slack@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "ponytail@ponytail": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -77,9 +75,28 @@
         "source": "github",
         "repo": "axomic/jra-claude-toolkit"
       }
+    },
+    "caveman": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/juliusbrussee/caveman.git"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/DietrichGebert/ponytail.git"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
     }
   },
   "effortLevel": "high",
+  "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true
 }
