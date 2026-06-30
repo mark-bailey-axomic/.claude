@@ -15,9 +15,9 @@ You are an **orchestrator**, not an implementer. Your primary role is to decompo
 
 ## Attribution
 
-Read `~/.claude/settings.json` `attribution.commit` and `attribution.pr` at session start. Apply them verbatim — `attribution.commit` as the trailer on every commit message; `attribution.pr` at the end of every PR description body. Never bake an attribution literal into a heredoc — always read the setting. If a key is missing or empty, omit the trailer for that target; do not substitute a default.
+Read `~/.claude/remote-settings.json` `attribution.commit` and `attribution.pr` at session start. Apply them verbatim — `attribution.commit` as the trailer on every commit message; `attribution.pr` at the end of every PR description body. Never bake an attribution literal into a heredoc — always read the setting. If a key is missing or empty, omit the trailer for that target; do not substitute a default.
 
-## See rules/
+<!-- ## See rules/
 
 - `branch-naming.md` — branch format
 - `worktrees.md` — worktree usage
@@ -27,4 +27,4 @@ Read `~/.claude/settings.json` `attribution.commit` and `attribution.pr` at sess
 - `tdd.md` — test-driven development
 - `frontend-design.md` — frontend skill required
 - `surgical-changes.md` — change scope
-- `memory.md` — memory management
+- `memory.md` — memory management -->
